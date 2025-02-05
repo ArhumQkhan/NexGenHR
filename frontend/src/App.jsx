@@ -1,27 +1,29 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css' //install bootstrap
-import {BrowserRouter, Routes, Route} from 'react-router-dom' // install react-router-dom
-import Employee from './Employee'
-import AddEmployee from './AddEmployee'
-import ShowEmployee from './ShowEmployee'
-import Invoice from './Invoice'
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./app.css";
+import Navbar from "./components/Navbar";
+import Layout from "./components/Layout";
+import JobPosting from "./pages/JobPosting";
+import HeroSection from "./components/HeroSection";
+import EmployeeLogin from "./pages/EmployeeLogin";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
-
   return (
-    <div className='App'>
-        <BrowserRouter>
+    <Router>
+      <div className="app-container">
+        <Navbar />
+        <Layout>
           <Routes>
-            <Route path='/' element={<Employee/>}></Route>
-            <Route path='/invoice/:id' element={<Invoice/>}></Route>
-            <Route path='/add-employee' element={<AddEmployee/>}></Route>
-            <Route path='/show/:id' element={<ShowEmployee/>}></Route>
+            <Route path="/" element={<HeroSection />} />
+            <Route path="/job-posting" element={<JobPosting />} />
+            <Route path="/employee-login" element={<EmployeeLogin />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
           </Routes>
-        </BrowserRouter>
-    </div>
-  )
-};
+        </Layout>
+      </div>
+    </Router>
+  );
+}
 
-export default App
-
+export default App;
