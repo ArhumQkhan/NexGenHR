@@ -37,22 +37,14 @@ function App() {
           <Route path="/employee-login" element={<EmployeeLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
 
-          {/* Routes from the old frontend */}
-          <Route path="/employee" element={<Employee />} />
-          <Route path="/invoice/:id" element={<Invoice />} />
-          <Route path="/add-employee" element={<AddEmployee />} />
-          <Route path="/show/:id" element={<ShowEmployee />} />
-        </Routes>
-      </Layout>
-    </div>
-  );
-}
-
-// Wrap the App component with Router
-function Root() {
-  return (
-    <Router>
-      <App />
+            {/* Routes from the first frontend */}
+            <Route path="/employee" element={<Employee />} />
+            <Route path="/employee/invoice/:id" element={<Invoice />} />
+            <Route path="/add-employee" element={<AddEmployee />} />
+            <Route path="/employee/show/:id" element={<ShowEmployee />} />
+          </Routes>
+        </Layout>
+      </div>
     </Router>
   );
 }

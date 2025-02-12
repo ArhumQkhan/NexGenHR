@@ -9,6 +9,7 @@ export default function AddEmployee() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [address, setAddress] = useState('');
     const [status, setStatus] = useState('ACTIVE');
     const [gender, setGender] = useState('Male');
@@ -22,7 +23,7 @@ export default function AddEmployee() {
     function handleSubmit(event) {
         event.preventDefault();
         const formattedDate = dateSelected ? dateSelected.toISOString().split('T')[0] : null;
-        axios.post('http://localhost:3001/add-employee', {firstName, lastName, email, address, status, gender, number, dateSelected: formattedDate, salary}) //these parameters should be same as in useState
+        axios.post('http://localhost:3001/add-employee', {firstName, lastName, email, password, address, status, gender, number, dateSelected: formattedDate, salary}) //these parameters should be same as in useState
         .then (res => {
             console.log(res);
             navigate('/'); //to navigate back to homepage after submitting
@@ -56,6 +57,11 @@ export default function AddEmployee() {
                             <div className="mb-3">
                                 <label htmlFor="E-mail" className="form-label text-white">E-mail</label>
                                 <input type="email" className="form-control" id="E-mail" onChange={e => setEmail(e.target.value)} />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="Password" className="form-label text-white">Password</label>
+                                <input type="possword" className="form-control" id="Password" onChange={e => setPassword(e.target.value)} />
                             </div>
 
                             <div className="mb-3">
