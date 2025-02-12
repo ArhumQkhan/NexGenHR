@@ -95,7 +95,7 @@ function Employee() {
         <div className="employee-container1">
             <div className="employee-container2">
                 <div className="leftNav">
-                    <Link to="/" className="leftNavBtn">
+                    <Link to="/employee" className="leftNavBtn">
                         Home
                     </Link>
                     <Link className="leftNavBtn">CV Screening</Link>
