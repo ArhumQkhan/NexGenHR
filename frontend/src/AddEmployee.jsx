@@ -60,8 +60,8 @@ export default function AddEmployee() {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="E-mail" className="form-label text-white">E-mail</label>
-                                <input type="email" className="form-control" id="E-mail" onChange={e => setEmail(e.target.value)} />
+                                <label htmlFor="Password" className="form-label text-white">Password</label>
+                                <input type="possword" className="form-control" id="Password" onChange={e => setPassword(e.target.value)} />
                             </div>
 
                             <div className="mb-3">

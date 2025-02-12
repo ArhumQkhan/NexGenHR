@@ -32,9 +32,9 @@ function App() {
 
             {/* Routes from the first frontend */}
             <Route path="/employee" element={<Employee />} />
-            <Route path="/invoice/:id" element={<Invoice />} />
+            <Route path="/employee/invoice/:id" element={<Invoice />} />
             <Route path="/add-employee" element={<AddEmployee />} />
-            <Route path="/show/:id" element={<ShowEmployee />} />
+            <Route path="/employee/show/:id" element={<ShowEmployee />} />
           </Routes>
         </Layout>
       </div>
