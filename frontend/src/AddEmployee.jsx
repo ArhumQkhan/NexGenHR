@@ -33,7 +33,7 @@ export default function AddEmployee() {
         <div className='add-container'>
             <div className='add-container2'>
                 <div className='leftNav'>
-                    <Link to="/" className='leftNavBtn'>Home</Link>
+                    <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
                     <Link className='leftNavBtn'>Job posting</Link>
                 </div>
