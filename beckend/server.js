@@ -81,6 +81,7 @@ app.get('/', (req,res) => {
     })
 }); 
 
+
 app.post('/add-employee', (req, res) => {
     const sql = "INSERT INTO employee(`first_name`, `last_name`, `em_email`, `em_password`, `em_address`, `em_status`, `em_gender`, `em_phone`, `em_birthday`, `em_salary`) VALUES (?)";
     const values = [
