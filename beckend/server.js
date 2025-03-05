@@ -85,16 +85,16 @@ app.get('/employee', (req,res) => {
 app.post('/employee/add-employee', (req, res) => {
     const sql = "INSERT INTO employee(`first_name`, `last_name`, `em_email`, `em_password`, `em_address`, `em_status`, `em_gender`, `em_phone`, `em_birthday`, `em_salary`) VALUES (?)";
     const values = [
-        req.body.firstName,
-        req.body.lastName,
-        req.body.email,
-        req.body.password,
-        req.body.address,
-        req.body.status,
-        req.body.gender,
-        req.body.number,
-        req.body.dateSelected,
-        req.body.salary
+        req.body.first_name,
+        req.body.last_name,
+        req.body.em_email,
+        req.body.em_password,
+        req.body.em_address,
+        req.body.em_status,
+        req.body.em_gender,
+        req.body.em_phone,
+        req.body.em_birthday,
+        req.body.em_salary
     ]
     db.query(sql, [values], (err,data) => {
         if(err) return res.json(err);
@@ -105,16 +105,26 @@ app.post('/employee/add-employee', (req, res) => {
 app.put('/employee/update/:id', (req, res) => {
     const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
     const values = [
-        req.body.firstName,
-        req.body.lastName,
-        req.body.email,
-        req.body.password,
-        req.body.address,
-        req.body.status,
-        req.body.gender,
-        req.body.number,
-        req.body.dateSelected,
-        req.body.salary
+        // req.body.firstName,
+        // req.body.lastName,
+        // req.body.email,
+        // req.body.password,
+        // req.body.address,
+        // req.body.status,
+        // req.body.gender,
+        // req.body.number,
+        // req.body.dateSelected,
+        // req.body.salary
+        req.body.first_name,
+        req.body.last_name,
+        req.body.em_email,
+        req.body.em_password,
+        req.body.em_address,
+        req.body.em_status,
+        req.body.em_gender,
+        req.body.em_phone,
+        req.body.em_birthday,
+        req.body.em_salary
     ]
     const id = req.params.id;
 

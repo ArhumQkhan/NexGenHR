@@ -50,7 +50,7 @@ export default function ShowEmployee() {
         <div className='show-container1'>
             <div className='show-container2'>
                 <div className='leftNav'>
-                    <Link to="/" className='leftNavBtn'>Home</Link>
+                    <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
                     <Link className='leftNavBtn'>Job posting</Link>
                     
@@ -179,7 +179,7 @@ export default function ShowEmployee() {
                                                 <select
                                                     value={formData.em_status}
                                                     onChange={(e) => setFormData({ ...formData, em_status: e.target.value })}
-                                                    onBlur={() => handleSave('em_phone', formData.em_status)}
+                                                    onBlur={() => handleSave('em_status', formData.em_status)}
                                                     onKeyDown={(e) => handleKeyDown(e, 'em_status')} // Listen for Enter key
                                                     autoFocus
                                                 >
