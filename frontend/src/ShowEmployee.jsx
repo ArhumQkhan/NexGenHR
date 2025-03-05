@@ -14,7 +14,7 @@ export default function ShowEmployee() {
     const [formData, setFormData] = useState({}); // State to store the updated form data
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/show/${id}`)
+        axios.get(`http://localhost:3001/employee/show/${id}`)
             .then(res => {
                 setShowEmployee(res.data);
                 setFormData(res.data[0]); // Initialize form data with fetched employee details
@@ -31,7 +31,7 @@ export default function ShowEmployee() {
         setFormData(updatedData); // Update local state
 
         try {
-            await axios.put(`http://localhost:3001/update/${id}`, updatedData); // Send updated data to backend
+            await axios.put(`http://localhost:3001/employee/update/${id}`, updatedData); // Send updated data to backend
             setEditField(null); // Exit edit mode
         } catch (error) {
             console.log(error);

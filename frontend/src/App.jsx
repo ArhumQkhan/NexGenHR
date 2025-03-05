@@ -40,7 +40,7 @@ function App() {
           {/* Routes from the old frontend */}
           <Route path="/employee" element={<Employee />} />
           <Route path="/employee/invoice/:id" element={<Invoice />} />
-          <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/employee/add-employee" element={<AddEmployee />} />
           <Route path="/employee/show/:id" element={<ShowEmployee />} />
         </Routes>
       </Layout>

@@ -16,7 +16,7 @@ function Employee() {
 
     const fetchEmployees = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/`);
+            const response = await axios.get(`http://localhost:3001/employee`);
             setEmployee(response.data);
         } catch (error) {
             console.error(error);
@@ -30,7 +30,7 @@ function Employee() {
         }
 
         try {
-            const response = await axios.get(`http://localhost:3001/search`, {
+            const response = await axios.get(`http://localhost:3001/employee/search`, {
                 params: { q: searchTerm },
             });
             setEmployee(response.data);
@@ -106,7 +106,7 @@ function Employee() {
             <div className="employee-container3">
                 <div className="data">
                     <div className="custom">
-                        <Link to="/add-employee" className="custom-btn custom-btn-success">
+                        <Link to="/employee/add-employee" className="custom-btn custom-btn-success">
                             Add +
                         </Link>
                         <div className="custom-input-group">

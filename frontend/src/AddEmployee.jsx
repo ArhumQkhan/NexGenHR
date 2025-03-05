@@ -23,10 +23,10 @@ export default function AddEmployee() {
     function handleSubmit(event) {
         event.preventDefault();
         const formattedDate = dateSelected ? dateSelected.toISOString().split('T')[0] : null;
-        axios.post('http://localhost:3001/add-employee', {firstName, lastName, email, password, address, status, gender, number, dateSelected: formattedDate, salary}) //these parameters should be same as in useState
+        axios.post('http://localhost:3001/employee/add-employee', {firstName, lastName, email, password, address, status, gender, number, dateSelected: formattedDate, salary}) //these parameters should be same as in useState
         .then (res => {
             console.log(res);
-            navigate('/'); //to navigate back to homepage after submitting
+            navigate('/employee'); //to navigate back to homepage after submitting
         }).catch(err => console.log(err))
     }
 
