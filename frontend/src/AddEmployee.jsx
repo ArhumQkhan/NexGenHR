@@ -61,7 +61,7 @@ export default function AddEmployee() {
 
                             <div className="mb-3">
                                 <label htmlFor="Password" className="form-label text-white">Password</label>
-                                <input type="possword" className="form-control" id="Password" onChange={e => setPassword(e.target.value)} />
+                                <input type="password" className="form-control" id="Password" onChange={e => setPassword(e.target.value)} />
                             </div>
 
                             <div className="mb-3">
