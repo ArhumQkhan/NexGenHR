@@ -22,13 +22,34 @@ export default function AddEmployee() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        
         const formattedDate = dateSelected ? dateSelected.toISOString().split('T')[0] : null;
-        axios.post('http://localhost:3001/employee/add-employee', {firstName, lastName, email, password, address, status, gender, number, dateSelected: formattedDate, salary}) //these parameters should be same as in useState
-        .then (res => {
-            console.log(res);
-            navigate('/employee'); //to navigate back to homepage after submitting
-        }).catch(err => console.log(err))
+    
+        // Ensure the keys match the backend table columns
+        const employeeData = {
+            first_name: firstName,
+            last_name: lastName,
+            em_email: email,
+            em_password: password,
+            em_address: address,
+            em_status: status,  //  This should match backend's `em_status`
+            em_gender: gender,
+            em_phone: number,
+            em_birthday: formattedDate,
+            em_salary: salary
+        };
+    
+        console.log("🔼 Sending Data:", employeeData); //  Debugging Request Data
+    
+        axios.post('http://localhost:3001/employee/add-employee', employeeData)
+            .then(res => {
+                console.log(" Success:", res.data);
+                navigate('/employee');
+            })
+            .catch(err => console.error(" Error:", err));
     }
+    
+    
 
     return (
         <div className='add-container'>

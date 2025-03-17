@@ -83,7 +83,11 @@ app.get('/employee', (req,res) => {
 
 
 app.post('/employee/add-employee', (req, res) => {
-    const sql = "INSERT INTO employee(`first_name`, `last_name`, `em_email`, `em_password`, `em_address`, `em_status`, `em_gender`, `em_phone`, `em_birthday`, `em_salary`) VALUES (?)";
+    console.log("🛠 Received Data:", req.body); // ✅ Debugging the received data
+
+    const sql = `INSERT INTO employee (first_name, last_name, em_email, em_password, em_address, em_status, em_gender, em_phone, em_birthday, em_salary) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
     const values = [
         req.body.first_name,
         req.body.last_name,
@@ -95,12 +99,18 @@ app.post('/employee/add-employee', (req, res) => {
         req.body.em_phone,
         req.body.em_birthday,
         req.body.em_salary
-    ]
-    db.query(sql, [values], (err,data) => {
-        if(err) return res.json(err);
-        return res.json(data);
-    })
-}); 
+    ];
+
+    // Corrected query execution
+    db.query(sql, values, (err, data) => {
+        if (err) {
+            console.error(" MySQL Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({ message: "✅ Employee added successfully!", data });
+    });
+});
+
 
 app.put('/employee/update/:id', (req, res) => {
     const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
