@@ -79,8 +79,49 @@ app.get('/employee', (req,res) => {
         if(err) return res.json(err); 
         return res.json(data); 
     })
-}); 
+}); //Display on Admin dashboard
 
+app.get('/employeedash/:id', (req,res) => {
+    const sql = "SELECT * FROM employee WHERE employee_id = ?";
+    const id = req.params.id;
+
+    db.query(sql, [id], (err, data) => {
+        if(err) return res.json(err); 
+        return res.json(data); 
+    })
+});// Display on Employee dashboard
+
+app.put('/employeedash/update/:id', (req, res) => {
+    const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
+    const values = [
+        // req.body.firstName,
+        // req.body.lastName,
+        // req.body.email,
+        // req.body.password,
+        // req.body.address,
+        // req.body.status,
+        // req.body.gender,
+        // req.body.number,
+        // req.body.dateSelected,
+        // req.body.salary
+        req.body.first_name,
+        req.body.last_name,
+        req.body.em_email,
+        req.body.em_password,
+        req.body.em_address,
+        req.body.em_status,
+        req.body.em_gender,
+        req.body.em_phone,
+        req.body.em_birthday,
+        req.body.em_salary
+    ]
+    const id = req.params.id;
+
+    db.query(sql, [...values, id], (err,data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+});
 
 app.post('/employee/add-employee', (req, res) => {
     console.log("🛠 Received Data:", req.body); // ✅ Debugging the received data

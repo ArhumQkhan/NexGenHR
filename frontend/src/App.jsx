@@ -8,6 +8,7 @@ import Employee from './Employee';
 import AddEmployee from './AddEmployee';
 import ShowEmployee from './ShowEmployee';
 import Invoice from './Invoice';
+import EmployeeDashboard from '../EmployeeDashboard';
 
 // Components from the new frontend
 import Navbar from './components/Navbar';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/admin-login" element={<AdminLogin />} />
 
           {/* Routes from the old frontend */}
+          <Route path="/employeedash/:id" element={<EmployeeDashboard/>}/>
           <Route path="/employee" element={<Employee />} />
           <Route path="/employee/invoice/:id" element={<Invoice />} />
           <Route path="/employee/add-employee" element={<AddEmployee />} />
