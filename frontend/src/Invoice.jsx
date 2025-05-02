@@ -217,7 +217,7 @@ function Salary() {
                 <div className='leftNav'>
                     <Link to="/" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
-                    <Link className='leftNavBtn'>Job posting</Link>
+                    <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
                 </div>
             </div>
 

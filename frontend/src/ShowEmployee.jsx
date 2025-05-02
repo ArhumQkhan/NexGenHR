@@ -52,7 +52,7 @@ export default function ShowEmployee() {
                 <div className='leftNav'>
                     <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
-                    <Link className='leftNavBtn'>Job posting</Link>
+                    <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
                     
                 </div>
             </div>

@@ -1,32 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import JobCard from "../components/postCards";
-import "./JobPosting.css"; // We'll create this CSS file next
+import "./JobPosting.css";
 
 const JobPosting = () => {
-  // Example job data (replace with real data or fetch from an API)
-  const jobs = [
-    {
-      id: 1,
-      title: "Software Engineer",
-      company: "Tech Corp",
-      location: "Remote",
-      description: "We are looking for a skilled software engineer to join our team.",
-    },
-    {
-      id: 2,
-      title: "Product Manager",
-      company: "Innovate Inc",
-      location: "Remote",
-      description: "Join us as a product manager to drive innovation and growth.",
-    },
-    {
-      id: 3,
-      title: "Data Scientist",
-      company: "DataWorks",
-      location: "Lahore, Punjab",
-      description: "We need a data scientist to analyze and interpret complex data.",
-    },
-  ];
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/job-posts")
+      .then((res) => res.json())
+      .then((data) => setJobs(data))
+      .catch((err) => console.error("Error fetching jobs:", err));
+  }, []);
 
   const handleApply = (jobId) => {
     alert(`Applying for job ID: ${jobId}`);
