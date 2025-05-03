@@ -5,6 +5,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const multer = require("multer");
+const path = require("path");
 
 
 const app = express();
@@ -241,6 +243,64 @@ app.get('/employee/search', (req, res) => {
         return res.json(data);
     });
 });
+
+
+
+////////////////////////////////////////////////////////
+
+// Get all job posts
+app.get('/job-posts', (req, res) => {
+    db.query('SELECT * FROM job_posts ORDER BY created_at DESC', (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+  });
+  
+  // Create a new job post (for admin)
+  app.post('/job-posts', (req, res) => {
+    const { title, company, location, description } = req.body;
+  
+    if (!title || !company || !location) {
+      return res.status(400).json({ message: 'Title, company, and location are required.' });
+    }
+  
+    const sql = 'INSERT INTO job_posts (title, company, location, description) VALUES (?, ?, ?, ?)';
+    db.query(sql, [title, company, location, description], (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ message: 'Job post created successfully' });
+    });
+  });
+  
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/cvs/");
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueName);
+    }
+});
+
+////upload cvs////
+
+const upload = multer({ storage });
+
+// Serve static files
+app.use('/uploads/cvs', express.static(path.join(__dirname, 'uploads/cvs')));
+
+// Route to handle job application CV upload
+app.post("/apply", upload.single("cv"), (req, res) => {
+    const { jobId } = req.body;
+    const cvPath = req.file.path;
+
+    // Optional: Store cvPath and jobId in database if needed
+
+    res.status(200).json({ message: "CV uploaded successfully!", jobId, cvPath });
+});
+
+
+
+////////////////////////////////////////////////////////
 
 
 app.listen(3001, () => {

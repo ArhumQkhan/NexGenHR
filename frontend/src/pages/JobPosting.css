@@ -1,17 +1,23 @@
 .job-posting-page {
-  padding: 20px;
-  max-width: 1200px;
+  
+  padding: 40px;
+  width: 100%;
   margin: 0 auto;
+  min-height: 100vh;
+  background-color: #ecf0f1;
+  border-radius: 12px;
 }
 
 .job-posting-page h1 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: 40px;
+  font-size: 2.4rem;
+  color: #2c3e50;
 }
 
 .job-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 24px;
+  padding: 0 40px; /* Center the cards in each column */
 }
