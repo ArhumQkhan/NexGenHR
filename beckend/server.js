@@ -89,7 +89,7 @@ app.get('/employeedash/:id', (req,res) => {
 
     db.query(sql, [id], (err, data) => {
         if(err) return res.json(err); 
-        return res.json(data); 
+        return res.json(data);
     })
 });// Display on Employee dashboard
 
