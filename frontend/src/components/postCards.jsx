@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./postCards.css";
+import "./postCards.css"; // Styles for the card and buttons
 
 const JobCard = ({ title, company, location, description }) => {
   const [cvFile, setCvFile] = useState(null);
@@ -36,8 +36,10 @@ const JobCard = ({ title, company, location, description }) => {
       <p className="job-company"><strong>Company:</strong> {company}</p>
       <p className="job-location"><strong>Location:</strong> {location}</p>
       <p className="job-description">{description}</p>
-      
-      <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
+
+      <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
+      <label htmlFor="cv-upload" className="choose-file-button">Choose File</label>
+
       <button className="apply-button" onClick={handleApply}>Apply Now</button>
     </div>
   );
