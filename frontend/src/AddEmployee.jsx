@@ -39,7 +39,7 @@ export default function AddEmployee() {
             em_salary: salary
         };
     
-        console.log("🔼 Sending Data:", employeeData); //  Debugging Request Data
+        console.log("Sending Data:", employeeData); //  Debugging Request Data
     
         axios.post('http://localhost:3001/employee/add-employee', employeeData)
             .then(res => {

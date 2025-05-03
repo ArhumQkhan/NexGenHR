@@ -31,7 +31,7 @@ function Salary() {
 
     useEffect(() => {
         // Fetch employee data from API
-            axios.get(`http://localhost:3001/invoice/${id}`)
+            axios.get(`http://localhost:3001/employee/invoice/${id}`)
             .then(response => {
                 setEmployee(response.data);
                 calculateDaysBetween(response.data);
