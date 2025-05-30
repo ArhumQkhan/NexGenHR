@@ -4,13 +4,16 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+const multer = require("multer");
+const path = require("path");
+
 
 const app = express();
 app.use(express.json()); 
 
 app.use(cors());
-  
+
 
 const db = mysql.createConnection({
     host: "database-1.cz6emccgik9t.us-east-1.rds.amazonaws.com",
@@ -28,71 +31,6 @@ db.connect(err => {
     }
     console.log('Connected to the MySQL database');
 });
-////////////////////////////////////////////////////////
-// Configure your email transporter (example using Gmail SMTP)
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'nexgenhr21@gmail.com',      // replace with your email
-    pass: 'vbkjqatovowklpfs',   // replace with your app password or email password
-  },
-});
-
-// Function to send salary slip email
-async function sendSalarySlipEmail(toEmail, employeeName, salaryData) {
-  const { em_salary, paid_leaves, unpaid_leaves } = salaryData;
-
-  const mailOptions = {
-    from: '"nexgenhr21@gmail.com',  // your sender email
-    to: toEmail,
-    subject: `Salary Slip for ${employeeName}`,
-    html: `
-      <h3>Salary Slip</h3>
-      <p>Hello ${employeeName},</p>
-      <p>Here is your salary slip:</p>
-      <ul>
-        <li><b>Salary:</b> $${em_salary}</li>
-        <li><b>Paid Leaves:</b> ${paid_leaves}</li>
-        <li><b>Unpaid Leaves:</b> ${unpaid_leaves}</li>
-      </ul>
-      <p>Regards,<br/>HR System</p>
-    `,
-  };
-
-  // Send the email
-  await transporter.sendMail(mailOptions);
-}
-app.post('/employee/send-salary-slip/:id', (req, res) => {
-    const sql = `SELECT employee_id, first_name, last_name, em_salary, paid_leaves, unpaid_leaves, em_email
-                 FROM employee WHERE employee_id = ?`;
-    const id = req.params.id;
-  
-    db.query(sql, [id], async (err, data) => {
-      if (err) return res.status(500).json({ error: err.message });
-  
-      if (data.length > 0) {
-        const employee = data[0];
-  
-        try {
-          await sendSalarySlipEmail(
-            employee.em_email,
-            `${employee.first_name} ${employee.last_name}`,
-            employee
-          );
-          return res.json({ message: "Salary slip sent via email." });
-        } catch (emailErr) {
-          return res.status(500).json({ 
-            message: "Failed to send email.", 
-            error: emailErr.message,
-          });
-        }
-      } else {
-        return res.status(404).json({ message: "Employee not found" });
-      }
-    });
-  });
-  
-
 
 /////////////////////////////////////////////////////////
 
@@ -143,8 +81,49 @@ app.get('/employee', (req,res) => {
         if(err) return res.json(err); 
         return res.json(data); 
     })
-}); 
+}); //Display on Admin dashboard
 
+app.get('/employeedash/:id', (req,res) => {
+    const sql = "SELECT * FROM employee WHERE employee_id = ?";
+    const id = req.params.id;
+
+    db.query(sql, [id], (err, data) => {
+        if(err) return res.json(err); 
+        return res.json(data);
+    })
+});// Display on Employee dashboard
+
+app.put('/employeedash/update/:id', (req, res) => {
+    const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
+    const values = [
+        // req.body.firstName,
+        // req.body.lastName,
+        // req.body.email,
+        // req.body.password,
+        // req.body.address,
+        // req.body.status,
+        // req.body.gender,
+        // req.body.number,
+        // req.body.dateSelected,
+        // req.body.salary
+        req.body.first_name,
+        req.body.last_name,
+        req.body.em_email,
+        req.body.em_password,
+        req.body.em_address,
+        req.body.em_status,
+        req.body.em_gender,
+        req.body.em_phone,
+        req.body.em_birthday,
+        req.body.em_salary
+    ]
+    const id = req.params.id;
+
+    db.query(sql, [...values, id], (err,data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+});
 
 app.post('/employee/add-employee', (req, res) => {
     console.log("🛠 Received Data:", req.body); // ✅ Debugging the received data
@@ -264,6 +243,64 @@ app.get('/employee/search', (req, res) => {
         return res.json(data);
     });
 });
+
+
+
+////////////////////////////////////////////////////////
+
+// Get all job posts
+app.get('/job-posts', (req, res) => {
+    db.query('SELECT * FROM job_posts ORDER BY created_at DESC', (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+  });
+  
+  // Create a new job post (for admin)
+  app.post('/job-posts', (req, res) => {
+    const { title, company, location, description } = req.body;
+  
+    if (!title || !company || !location) {
+      return res.status(400).json({ message: 'Title, company, and location are required.' });
+    }
+  
+    const sql = 'INSERT INTO job_posts (title, company, location, description) VALUES (?, ?, ?, ?)';
+    db.query(sql, [title, company, location, description], (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ message: 'Job post created successfully' });
+    });
+  });
+  
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/cvs/");
+    },
+    filename: (req, file, cb) => {
+        const uniqueName = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueName);
+    }
+});
+
+////upload cvs////
+
+const upload = multer({ storage });
+
+// Serve static files
+app.use('/uploads/cvs', express.static(path.join(__dirname, 'uploads/cvs')));
+
+// Route to handle job application CV upload
+app.post("/apply", upload.single("cv"), (req, res) => {
+    const { jobId } = req.body;
+    const cvPath = req.file.path;
+
+    // Optional: Store cvPath and jobId in database if needed
+
+    res.status(200).json({ message: "CV uploaded successfully!", jobId, cvPath });
+});
+
+
+
+////////////////////////////////////////////////////////
 
 
 app.listen(3001, () => {

@@ -8,11 +8,6 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import "./Invoice.css";
 
-
-
-
-
-
 function Salary() {
     const { id } = useParams();
     const [employee, setEmployee] = useState({});  // Single employee object
@@ -36,7 +31,7 @@ function Salary() {
 
     useEffect(() => {
         // Fetch employee data from API
-            axios.get(`http://localhost:3001/invoice/${id}`)
+            axios.get(`http://localhost:3001/employee/invoice/${id}`)
             .then(response => {
                 setEmployee(response.data);
                 calculateDaysBetween(response.data);
@@ -71,21 +66,6 @@ function Salary() {
             pdf.save(`salary-details-${employee.first_name}.pdf`);
         });
     };
-    //////////////////////////
-    function sendSalarySlipEmail(id) {
-        fetch(`http://localhost:3001/employee/send-salary-slip/${id}`, {
-          method: 'POST',
-        })
-          .then(res => res.json())
-          .then(data => alert(data.message))
-          .catch(err => alert('Failed to send email: ' + err.message));
-      }
-      
-    
-      
-      
-
-    //////////////////////////
 
 
     // Function to calculate the number of working days excluding weekends
@@ -237,7 +217,7 @@ function Salary() {
                 <div className='leftNav'>
                     <Link to="/" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
-                    <Link className='leftNavBtn'>Job posting</Link>
+                    <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
                 </div>
             </div>
 
@@ -245,7 +225,6 @@ function Salary() {
                 <div className='data1'>
                     <div className='top'>
                         <button onClick={printPDF}>Download</button>
-                        <button onClick={() => sendSalarySlipEmail(id)}>Send Salary Slip Email</button>     
                     </div>
                     <h3>Company Name</h3>
                     <div id='salary-section' className='print-section'>
