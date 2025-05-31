@@ -48,7 +48,7 @@ export default function AddEmployee() {
             })
             .catch(err => console.error(" Error:", err));
     }
-    
+        
     
 
     return (
@@ -58,6 +58,7 @@ export default function AddEmployee() {
                     <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
                     <Link className='leftNavBtn'>Job posting</Link>
+                    
                 </div>
             </div>
             <div className='add-container3'>

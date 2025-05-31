@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const multer = require("multer");
 const path = require("path");
+const nodemailer = require('nodemailer');
+
 
 
 const app = express();
@@ -31,6 +33,77 @@ db.connect(err => {
     }
     console.log('Connected to the MySQL database');
 });
+
+////////////////////////////////////////////////////////
+// Initialzing nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nexgenhr21@gmail.com',      // replace with your email
+    pass: 'vbkjqatovowklpfs',   // replace with your app password or email password
+  },
+});
+
+// Function to send salary slip email
+async function sendSalarySlipEmail(toEmail, employeeName, salaryData) {
+  const { em_salary, paid_leaves, unpaid_leaves } = salaryData;
+
+  const mailOptions = {
+    from: '"nexgenhr21@gmail.com',  // your sender email
+    to: toEmail,
+    subject: `Salary Slip for ${employeeName}`,
+    html: `
+      <h3>Salary Slip</h3>
+      <p>Hello ${employeeName},</p>
+      <p>Here is your salary slip:</p>
+      <ul>
+        <li><b>Salary:</b> $${em_salary}</li>
+        <li><b>Paid Leaves:</b> ${paid_leaves}</li>
+        <li><b>Unpaid Leaves:</b> ${unpaid_leaves}</li>
+      </ul>
+      <p>Regards,<br/>HR System</p>
+    `,
+  };
+
+  // Send the email
+  await transporter.sendMail(mailOptions);
+}
+app.post('/employee/send-salary-slip/:id', (req, res) => {
+    const sql = `SELECT employee_id, first_name, last_name, em_salary, paid_leaves, unpaid_leaves, em_email
+                 FROM employee WHERE employee_id = ?`;
+    const id = req.params.id;
+  
+    db.query(sql, [id], async (err, data) => {
+      if (err) return res.status(500).json({ error: err.message });
+  
+      if (data.length > 0) {
+        const employee = data[0];
+  
+        try {
+          await sendSalarySlipEmail(
+            employee.em_email,
+            `${employee.first_name} ${employee.last_name}`,
+            employee
+          );
+          return res.json({ message: "Salary slip sent via email." });
+        } catch (emailErr) {
+          return res.status(500).json({ 
+            message: "Failed to send email.", 
+            error: emailErr.message,
+          });
+        }
+      } else {
+        return res.status(404).json({ message: "Employee not found" });
+      }
+    });
+  });
+  
+
+
+/////////////////////////////////////////////////////////
+
+
+
 
 /////////////////////////////////////////////////////////
 
@@ -150,8 +223,30 @@ app.post('/employee/add-employee', (req, res) => {
             console.error(" MySQL Error:", err);
             return res.status(500).json({ error: err.message });
         }
+        ////////////function to add in users credentials table
+        (async () => {
+            try {
+                const hashedPassword = await bcrypt.hash(req.body.em_password, 10);
+                const userInsertQuery = 'INSERT INTO users (username, password, role) VALUES (?, ?, ?)';
+                const userValues = [req.body.em_email, hashedPassword, 'Employee'];
+
+                db.query(userInsertQuery, userValues, (userErr, userResult) => {
+                    if (userErr) {
+                        console.error("User Insert Error:", userErr);
+                    } else {
+                        console.log("✅ User added to users table");
+                    }
+                });
+            } catch (hashErr) {
+                console.error("Password Hash Error:", hashErr);
+            }
+        })();
+        //////////////////
         res.status(201).json({ message: "✅ Employee added successfully!", data });
+
+    
     });
+    
 });
 
 
