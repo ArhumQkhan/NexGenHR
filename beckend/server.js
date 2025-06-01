@@ -7,6 +7,10 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const multer = require("multer");
 const path = require("path");
+const nodemailer = require('nodemailer');
+
+
+
 
 
 const app = express();
@@ -31,6 +35,111 @@ db.connect(err => {
     }
     console.log('Connected to the MySQL database');
 });
+
+////////////////////////////////////////////////////////
+// Initialzing nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nexgenhr21@gmail.com',      // replace with your email
+    pass: 'vbkjqatovowklpfs',   // replace with your app password or email password
+  },
+});
+// Email sender function
+async function sendSalarySlipEmail(toEmail, employeeName, salaryData) {
+  const {
+    em_salary,
+    paid_leaves,
+    unpaid_leaves,
+    gross_salary,
+    net_salary,
+    leave_deduction,
+    monthly_tax,
+    provident_fund,
+  } = salaryData;
+
+  const mailOptions = {
+    from: '"HR System" <nexgenhr21@gmail.com>',
+    to: toEmail,
+    subject: `Salary Slip for ${employeeName}`,
+    html: `
+      <h3>Salary Slip</h3>
+      <p>Hello ${employeeName},</p>
+      <p>Here is your salary slip for this month:</p>
+      <ul>
+        <li><b>Base Salary:</b> $${em_salary}</li>
+        <li><b>Gross Salary:</b> $${gross_salary}</li>
+        <li><b>Provident Fund:</b> $${provident_fund}</li>
+        <li><b>Leave Deduction:</b> $${leave_deduction}</li>
+        <li><b>Monthly Tax:</b> $${monthly_tax}</li>
+        <li><b>Net Salary:</b> $${net_salary}</li>
+        <li><b>Paid Leaves:</b> ${paid_leaves}</li>
+        <li><b>Unpaid Leaves:</b> ${unpaid_leaves}</li>
+      </ul>
+      <p>Regards,<br/>HR Department</p>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+}
+
+// Route to send salary slip
+app.post("/employee/send-salary-slip/:id", (req, res) => {
+  const employeeId = req.params.id;
+
+  const sql = `
+    SELECT employee_id, first_name, last_name, em_salary, paid_leaves, unpaid_leaves, em_email
+    FROM employee
+    WHERE employee_id = ?
+  `;
+
+  db.query(sql, [employeeId], async (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "Employee not found." });
+    }
+
+    const employee = result[0];
+
+    // Instead of sending only the base salary,
+    // we expect the final calculated salary and components to come from the frontend
+    const {
+      grossSalary,
+      netSalary,
+      leaveDeduction,
+      monthlyIncomeTax,
+      providentFund,
+    } = req.body; // Make sure these are passed from frontend
+
+    const salaryData = {
+      ...employee,
+      gross_salary: grossSalary,
+      net_salary: netSalary,
+      leave_deduction: leaveDeduction,
+      monthly_tax: monthlyIncomeTax,
+      provident_fund: providentFund,
+    };
+
+    try {
+      await sendSalarySlipEmail(
+        employee.em_email,
+        `${employee.first_name} ${employee.last_name}`,
+        salaryData
+      );
+      res.json({ message: "Salary slip sent successfully!" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to send email.", error: error.message });
+    }
+  });
+});
+
+
+
+/////////////////////////////////////////////////////////
+
+
+
 
 /////////////////////////////////////////////////////////
 
@@ -150,8 +259,30 @@ app.post('/employee/add-employee', (req, res) => {
             console.error(" MySQL Error:", err);
             return res.status(500).json({ error: err.message });
         }
+        ////////////function to add in users credentials table
+        (async () => {
+            try {
+                const hashedPassword = await bcrypt.hash(req.body.em_password, 10);
+                const userInsertQuery = 'INSERT INTO users (username, password, role) VALUES (?, ?, ?)';
+                const userValues = [req.body.em_email, hashedPassword, 'Employee'];
+
+                db.query(userInsertQuery, userValues, (userErr, userResult) => {
+                    if (userErr) {
+                        console.error("User Insert Error:", userErr);
+                    } else {
+                        console.log("✅ User added to users table");
+                    }
+                });
+            } catch (hashErr) {
+                console.error("Password Hash Error:", hashErr);
+            }
+        })();
+        //////////////////
         res.status(201).json({ message: "✅ Employee added successfully!", data });
+
+    
     });
+    
 });
 
 

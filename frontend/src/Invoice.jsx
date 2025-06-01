@@ -67,6 +67,8 @@ function Salary() {
         });
     };
 
+    
+
 
     // Function to calculate the number of working days excluding weekends
     const calculateWorkingDays = (start, end) => {
@@ -208,7 +210,26 @@ function Salary() {
     const toggleProvidentMode = () => {
         setProvidentPercentage(!providentPercentage);
     };
-
+    //////////////////////////
+    function sendSalarySlipEmail(id) {
+    fetch(`http://localhost:3001/employee/send-salary-slip/${id}`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        grossSalary,
+        netSalary,
+        leaveDeduction,
+        monthlyIncomeTax,
+        providentFund,
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => alert(data.message))
+        .catch((err) => alert("Failed to send email: " + err.message));
+    }
+    ///////////////////////////
 
 
     return (
@@ -225,6 +246,7 @@ function Salary() {
                 <div className='data1'>
                     <div className='top'>
                         <button onClick={printPDF}>Download</button>
+                        <button onClick={() => sendSalarySlipEmail(employee.employee_id)}>Send Salary Slip Email</button>
                     </div>
                     <h3>Company Name</h3>
                     <div id='salary-section' className='print-section'>
