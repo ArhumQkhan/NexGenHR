@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component'; // Importing React Data Table Component
 import './Employee.css';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faTrashCan, faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
 
 function Employee() {
     const [employee, setEmployee] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetchEmployees();
@@ -22,6 +25,11 @@ function Employee() {
             console.error(error);
         }
     };
+    const handleLogout = () => {
+    localStorage.removeItem("token"); // ✅ Clear auth token (or whatever key you used)
+    navigate("/admin-login"); // ✅ Redirect to login page
+};
+
 
     const handleSearch = async () => {
         if (searchTerm.trim() === '') {
@@ -100,7 +108,8 @@ function Employee() {
                     </Link>
                     <Link className="leftNavBtn">CV Screening</Link>
                     <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
-                    <Link className='leftNavBtn'>Logout</Link> 
+                    <button className='leftNavBtn' onClick={handleLogout}>Logout</button>
+ 
                 </div>
             </div>
 
