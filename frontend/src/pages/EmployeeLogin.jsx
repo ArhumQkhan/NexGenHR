@@ -27,7 +27,19 @@ function EmployeeLogin() {
     if (response.ok) {
       alert(data.message);  // Handle successful login
       localStorage.setItem('authToken', data.token);  // Store the JWT token
-      navigate('/dashboard');  // Redirect to dashboard (or any other page)
+      if (response.ok) {
+        alert(data.message);
+        localStorage.setItem('authToken', data.token);
+
+        // Redirect based on presence of employee_id
+        if (data.userId) {
+          navigate(`/employeedash/${data.userId}`);
+        } else {
+          navigate('/admindash'); // or wherever admin goes
+        }
+      }
+
+
     } else {
       alert(data.message);  // Handle invalid login
     }
