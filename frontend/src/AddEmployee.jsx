@@ -58,6 +58,7 @@ export default function AddEmployee() {
                     <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
                     <Link className='leftNavBtn'>Job posting</Link>
+                    <Link className='leftNavBtn'>Logout</Link> 
                     
                 </div>
             </div>

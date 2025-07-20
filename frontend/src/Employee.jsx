@@ -100,6 +100,7 @@ function Employee() {
                     </Link>
                     <Link className="leftNavBtn">CV Screening</Link>
                     <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
+                    <Link className='leftNavBtn'>Logout</Link> 
                 </div>
             </div>
 
