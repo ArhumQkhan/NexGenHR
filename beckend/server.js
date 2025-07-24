@@ -154,7 +154,13 @@ app.post('/login', (req, res) => {
     }
   
     // Query the database for the user
-    const query = 'SELECT * FROM users WHERE username = ? AND role = ?';
+    const query = `
+      SELECT u.*, e.employee_id 
+      FROM users u
+      LEFT JOIN employee e ON u.username = e.em_email
+      WHERE u.username = ? AND u.role = ?
+    `;
+
     db.query(query, [username, role], async (err, results) => {
       if (err) {
         return res.status(500).json({ message: 'Database query error.' });
@@ -176,7 +182,13 @@ app.post('/login', (req, res) => {
         expiresIn: '1h',
       });
   
-      res.json({ message: 'Login successful.', token });
+      res.json({
+        message: 'Login successful.',
+        token,
+        userId: user.employee_id || null, // could be undefined/null for non-employees
+        role: user.role
+      });
+
     });
   });
   
