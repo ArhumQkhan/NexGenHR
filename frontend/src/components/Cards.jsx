@@ -34,6 +34,7 @@ function Cards() {
     <div className="cards">
       
       <h1>The Services We Provide!</h1>
+      <div data-aos="zoom-in" data-aos-delay="200"> 
       <div className="cards__container">
         <div className="cards__wrapper">
           <ul className="cards__items">
@@ -49,6 +50,7 @@ function Cards() {
           </ul>
         </div>
       </div>
+    </div>
     </div>
   );
 }

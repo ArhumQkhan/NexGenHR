@@ -14,7 +14,7 @@
 .hero-text {
   width: 50%;
   text-align: left;
-  color: black; /* Ensuring readability on white */
+  color: #0d47a1;  /* Ensuring readability on white */
   z-index: 1; /* Ensure text is above the image */
 }
 
@@ -28,7 +28,7 @@
 .hero-text p {
   font-size: 1.2rem;
   margin-bottom: 2rem; /* Consistent margin */
-  color: #555; /* Slightly lighter text for better contrast */
+  color: #1976d2; /* Slightly lighter text for better contrast */
 }
 
 /* Buttons */
@@ -47,12 +47,12 @@
 }
 
 .btn--primary {
-  background-color: #0e0d0d;
+  background-color: #1976d2;
   color: white;
 }
 
 .btn--primary:hover {
-  background-color: #151413;
+  background-color: #0d47a1;
   transform: scale(1.05); /* Slight zoom effect */
 }
 
@@ -114,3 +114,24 @@
     margin-top: 1rem;
   }
 }
+.info-section {
+  width: 100%;
+  padding: 80px 40px;
+  text-align: center;
+  background: none; /* ✅ remove the box */
+  margin-top: 50px;
+}
+
+.info-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #0d47a1; /* ✅ Blue text */
+}
+
+.info-section p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #1976d2; /* ✅ Lighter blue for contrast */
+}
+
