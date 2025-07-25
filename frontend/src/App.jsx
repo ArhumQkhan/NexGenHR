@@ -20,6 +20,16 @@ import AddEmployee from './AddEmployee';
 import ShowEmployee from './ShowEmployee';
 import Invoice from './Invoice';
 import EmployeeDashboard from '../EmployeeDashboard';
+
+// Components from the new frontend
+import Navbar from './components/Navbar';
+import Layout from './components/Layout';
+import JobPosting from './pages/JobPosting';
+import HeroSection from './components/HeroSection';
+import EmployeeLogin from './pages/EmployeeLogin';
+import AdminLogin from './pages/AdminLogin';
+
+///Job post///
 import CreateJobPost from './pages/CreateJobPost';
 
 // 🌟 NEW Wrapper for AOS & location-aware rendering
@@ -67,7 +77,7 @@ function AppWrapper() {
           <Route path="/employee/invoice/:id" element={<Invoice />} />
           <Route path="/employee/add-employee" element={<AddEmployee />} />
           <Route path="/employee/show/:id" element={<ShowEmployee />} />
-          <Route path="/admin/create-job" element={<CreateJobPost />} />
+          <Route path="/admin/create-job" element={<JobAdminPage />} />
         </Routes>
       </Layout>
     </div>
