@@ -25,8 +25,11 @@ import CreateJobPost from './pages/CreateJobPost';
 // 🌟 NEW Wrapper for AOS & location-aware rendering
 function AppWrapper() {
   const location = useLocation();
-  const showNavbarRoutes = ["/", "/job-posting", "/employee-login", "/admin-login"];
+  const showNavbarRoutes = ["/", "/job-posting","/employee-login", "/admin-login"];
   const shouldShowNavbar = showNavbarRoutes.includes(location.pathname);
+  const showFooterRoutes = ["/", "/job-posting","/employee-login", "/admin-login"]; 
+  const shouldShowFooter = showFooterRoutes.includes(location.pathname);
+
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -81,3 +84,4 @@ function Root() {
 }
 
 export default Root;
+// "/employee-login"
