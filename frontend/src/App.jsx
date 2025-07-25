@@ -19,7 +19,8 @@ import EmployeeLogin from './pages/EmployeeLogin';
 import AdminLogin from './pages/AdminLogin';
 
 ///Job post///
-import CreateJobPost from './pages/CreateJobPost';
+
+import JobAdminPage from './components/JobAdminPage';
 
 function App() {
   const location = useLocation(); // Get the current route
@@ -47,7 +48,7 @@ function App() {
           <Route path="/employee/invoice/:id" element={<Invoice />} />
           <Route path="/employee/add-employee" element={<AddEmployee />} />
           <Route path="/employee/show/:id" element={<ShowEmployee />} />
-          <Route path="/admin/create-job" element={<CreateJobPost />} />
+          <Route path="/admin/create-job" element={<JobAdminPage />} />
         </Routes>
       </Layout>
     </div>
