@@ -169,12 +169,6 @@ footer {
 }
 
 
-[data-aos] {
-  transition-property: transform, opacity;
-  transition-timing-function: ease;
-}
-
-
 
 
 

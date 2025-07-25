@@ -1,68 +1,48 @@
-import React, { useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import './app.css';
-import './components/layout.css';
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; // React Router
+import './app.css'; // Your custom CSS
 
-// AOS
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
-// Components
-import Navbar from './components/Navbar';
-import Layout from './components/Layout';
-import HeroSection from './components/HeroSection';
-import JobPosting from './pages/JobPosting';
-import EmployeeLogin from './pages/EmployeeLogin';
-import AdminLogin from './pages/AdminLogin';
+// Components from the old frontend
 import Employee from './Employee';
 import AddEmployee from './AddEmployee';
 import ShowEmployee from './ShowEmployee';
 import Invoice from './Invoice';
 import EmployeeDashboard from '../EmployeeDashboard';
+
+// Components from the new frontend
+import Navbar from './components/Navbar';
+import Layout from './components/Layout';
+import JobPosting from './pages/JobPosting';
+import HeroSection from './components/HeroSection';
+import EmployeeLogin from './pages/EmployeeLogin';
+import AdminLogin from './pages/AdminLogin';
+
+///Job post///
 import CreateJobPost from './pages/CreateJobPost';
 
-// 🌟 NEW Wrapper for AOS & location-aware rendering
-function AppWrapper() {
-  const location = useLocation();
-  const showNavbarRoutes = ["/", "/job-posting","/employee-login", "/admin-login"];
+function App() {
+  const location = useLocation(); // Get the current route
+
+  // Define routes where the Navbar should be shown
+  const showNavbarRoutes = ["/", "/job-posting", "/employee-login", "/admin-login"];
+
+  // Check if the current route is in the showNavbarRoutes array
   const shouldShowNavbar = showNavbarRoutes.includes(location.pathname);
-  const showFooterRoutes = ["/", "/job-posting","/employee-login", "/admin-login"]; 
-  const shouldShowFooter = showFooterRoutes.includes(location.pathname);
-
-
-  useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-  }, []);
-
-  useEffect(() => {
-    AOS.refresh(); // Re-trigger AOS animations on route change
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      const scrollBar = document.querySelector('.scroll-bar');
-      if (scrollBar) scrollBar.style.width = `${scrollPercent}%`;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <div className="app-container">
-      <div className="scroll-bar"></div>
-      {shouldShowNavbar && <Navbar />}
-      <Layout>
+      {shouldShowNavbar && <Navbar />} {/* Conditionally render Navbar */}
+      <Layout> {/* Layout from the new frontend */}
         <Routes>
+          {/* Routes from the new frontend */}
           <Route path="/" element={<HeroSection />} />
           <Route path="/job-posting" element={<JobPosting />} />
           <Route path="/employee-login" element={<EmployeeLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/employeedash/:id" element={<EmployeeDashboard />} />
+
+          {/* Routes from the old frontend */}
+          <Route path="/employeedash/:id" element={<EmployeeDashboard/>}/>
           <Route path="/employee" element={<Employee />} />
           <Route path="/employee/invoice/:id" element={<Invoice />} />
           <Route path="/employee/add-employee" element={<AddEmployee />} />
@@ -74,14 +54,13 @@ function AppWrapper() {
   );
 }
 
-// Root includes Router
+// Wrap the App component with Router
 function Root() {
   return (
     <Router>
-      <AppWrapper />
+      <App />
     </Router>
   );
 }
 
 export default Root;
-// "/employee-login"

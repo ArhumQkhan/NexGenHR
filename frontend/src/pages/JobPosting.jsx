@@ -5,8 +5,6 @@ import "./JobPosting.css";
 const JobPosting = () => {
   const [jobs, setJobs] = useState([]);
 
-  const bgColors = ["bg-blue", "bg-green", "bg-yellow", "bg-pink", "bg-lavender"];
-
   useEffect(() => {
     fetch("http://localhost:3001/job-posts")
       .then((res) => res.json())
@@ -22,10 +20,9 @@ const JobPosting = () => {
     <div className="job-posting-page">
       <h1>Job Postings</h1>
       <div className="job-list">
-        {jobs.map((job, index) => (
+        {jobs.map((job) => (
           <JobCard
             key={job.id}
-            index={index}
             title={job.title}
             company={job.company}
             location={job.location}
@@ -33,7 +30,6 @@ const JobPosting = () => {
             onApply={() => handleApply(job.id)}
           />
         ))}
-
       </div>
     </div>
   );
