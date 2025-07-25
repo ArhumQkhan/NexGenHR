@@ -1,73 +1,76 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import "./loginForm.css"; // Reuse the same CSS file
+import "./loginForm.css"; // New CSS file
 
 function EmployeeLogin() {
   const navigate = useNavigate();
 
-  // State for input fields
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Send POST request to the backend
     const response = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: username,
-        password: password,
-        role: 'Employee',  // HR role specified for this page
+        username,
+        password,
+        role: 'Employee',
       }),
     });
 
     const data = await response.json();
+
     if (response.ok) {
-      alert(data.message);  // Handle successful login
-      localStorage.setItem('authToken', data.token);  // Store the JWT token
-      if (response.ok) {
-        alert(data.message);
-        localStorage.setItem('authToken', data.token);
-
-        // Redirect based on presence of employee_id
-        if (data.userId) {
-          navigate(`/employeedash/${data.userId}`);
-        } else {
-          navigate('/admindash'); // or wherever admin goes
-        }
-      }
-
-
+      alert(data.message);
+      localStorage.setItem('authToken', data.token);
+      navigate(data.userId ? `/employeedash/${data.userId}` : '/admindash');
     } else {
-      alert(data.message);  // Handle invalid login
+      alert(data.message);
     }
   };
+
   return (
-    <div className="login-container">
-      <div className="login-content">
-        <div className="login-box">
-          <h2>Employee Login</h2>
-          <form onSubmit={handleLogin}>
-            <input type="email"
-            placeholder="Email" required 
+    <div className="employee-login-page">
+      {/* Left Side */}
+      <div className="login-left">
+        <div className="brand"></div>
+        <h2>Welcome Back!</h2>
+        <p>Login to your employee dashboard and manage your work efficiently.</p>
+
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
             value={username}
-            onChange={(e) => setUsername(e.target.value)} // Update id state
-            />
-            <input type="password"
-            placeholder="Password" required 
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Update password state
-            
-            />
-            <button type="submit">Login</button>
-          </form>
-        </div>
-        <div className="image-section">
-          <img src="/emp-login.jpg" alt="Background" />
-        </div>
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+          <a href="#" className="forgot-password">Forgot Password?</a>
+        </form>
       </div>
+
+      {/* Right Side */}
+      <div className="login-right">
+          <video autoPlay loop muted playsInline className="login-video">
+              <source src="/EmpLog.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+          </video>
+
+
+      </div>
+
+
     </div>
   );
 }

@@ -22,23 +22,27 @@
 /* Ensures content is properly aligned and does not repeat background */
 .content {
   width: 100%;
-  height: 100vh; /* Prevents scrolling */
+  min-height: calc(100vh - 120px); /* allows content to expand beyond screen height */
+  padding-top: 80px;
+  padding-bottom: 60px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: white; /* Ensures text is readable */
+  color: white;
 }
+
 
 
 .hero-container {
-  /* Ensure it takes full height of the viewport */
-  height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: space-between; /* space between image and text */
+  padding: 50px 80px; /* spacing inside the container */
+  width: 100%;
+  max-width: 1200px; /* for centering content */
+  margin: 0 auto;
 }
+
 
 .hero-container > h1,
 .hero-container > p {
@@ -60,4 +64,24 @@
 
 .hero-btns {
   margin-top: 32px;
+}
+/* Navbar Gradient */
+.custom-navbar {
+  background: linear-gradient(90deg, #0d47a1, #1976d2, #42a5f5);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Gradient */
+.custom-footer {
+  background: linear-gradient(90deg, #0d47a1, #1976d2, #42a5f5);
+}
+.scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(to right, #42a5f5, #0d47a1);
+  z-index: 9999;
+  transition: width 0.2s ease;
 }
