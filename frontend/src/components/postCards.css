@@ -3,9 +3,30 @@
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card:nth-child(1) {
+  background-color: #fae9eb;
+}
+
+.job-card:nth-child(2) {
+  background-color: #e7eff2;
+}
+
+.job-card:nth-child(3) {
+  background-color: #eaf1df;
+
+}
+
+.job-card:nth-child(4) {
+  background-color: #f9f5f2;
+}
+
+.job-card:nth-child(5) {
+  background-color: #eee6f2;
 }
 
 .job-card:hover {
@@ -33,7 +54,7 @@
 }
 
 .apply-button, .choose-file-button {
-  background-color: #3498db;
+  background-color: #1976d2;
   color: white;
   margin-left: 5px;
   padding: 15px 20px;
@@ -45,7 +66,7 @@
 }
 
 .apply-button:hover, .choose-file-button:hover {
-  background-color: #2980b9;
+  background-color: #0d47a1;
 }
 
 input[type="file"] {

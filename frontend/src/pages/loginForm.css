@@ -1,73 +1,85 @@
-/* Main container */
-.login-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
+/* General Container */
+.login-page-container {
+  display: flex;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0; /* Fallback background color */
-}
-
-/* Content wrapper */
-.login-content {
-  display: flex;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
   overflow: hidden;
-  width: 800px; /* Adjust width as needed */
-  max-width: 90%;
+  background-color: #f5f8fa;
 }
 
-/* Login form styling */
-.login-box {
+/* Left Side */
+.login-left {
   flex: 1;
-  padding: 2rem;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.login-left h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.login-left p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  color: #7f8c8d;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.login-form button {
+  background-color: #0d47a1;
   color: white;
-}
-
-.login-box h2 {
-  margin-bottom: 20px;
-}
-
-.login-box input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
-}
-
-.login-box button {
-  width: 100%;
-  padding: 10px;
-  background-color: #ff5733;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.login-box button:hover {
-  background-color: #e64a19;
+.login-form button:hover {
+  background-color: #1565c0;
 }
 
-/* Image section */
-.image-section {
+.forgot-password {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #0d47a1;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Right Side */
+.login-right {
   flex: 1;
-  background: #ccc; /* Fallback background color */
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px;
 }
 
-.image-section img {
+.login-right > div,
+.login-right > svg {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 500px;
 }

@@ -1,59 +1,67 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import "./loginForm.css";
+import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "../assets/lotties/adminLogin.json";
+import "./loginForm.css"; // Reuse styling
 
 function AdminLogin() {
   const navigate = useNavigate();
-
-  // State for input fields
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
+    e.preventDefault();
 
-    // Send POST request to the backend
-    const response = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: username,
-        password: password,
-        role: 'HR',  // HR role specified for this page
+        username,
+        password,
+        role: "HR", // Admin role
       }),
     });
 
     const data = await response.json();
     if (response.ok) {
-      alert(data.message);  // Handle successful login
-      localStorage.setItem('authToken', data.token);  // Store the JWT token
-      navigate('/Employee');  // Redirect to dashboard (or any other page)
+      alert(data.message);
+      localStorage.setItem("authToken", data.token);
+      navigate("/Employee"); // or your admin dashboard
     } else {
-      alert(data.message);  // Handle invalid login
+      alert(data.message);
     }
   };
+
   return (
-    <div className="login-container">
-      <div className="login-content">
-        <div className="login-box">
-          <h2>Admin Login</h2>
-          <form onSubmit={handleLogin}>
-            <input type="email"
-            placeholder="Email" required 
+    <div className="login-page-container">
+      {/* Left: Login Form */}
+      <div className="login-left">
+        <h2>Welcome Back, Admin!</h2>
+        <p>Login to your admin dashboard to manage NexGenHR operations.</p>
+
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
             value={username}
-            onChange={(e) => setUsername(e.target.value)} // Update id state
-            />
-            <input type="password"
-            placeholder="Password" required
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Update password state            
-            />
-            <button type="submit">Login</button>
-          </form>
-        </div>
-        <div className="image-section">
-          <img src="/admin-login.jpg" alt="Background" />
-        </div>
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+          <a href="#" className="forgot-password">Forgot Password?</a>
+        </form>
+      </div>
+
+      {/* Right: Lottie Animation */}
+      <div className="login-right">
+        <Lottie animationData={animationData} loop={true} />
       </div>
     </div>
   );

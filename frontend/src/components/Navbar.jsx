@@ -8,7 +8,7 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           NexGenHR

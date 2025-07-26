@@ -9,7 +9,7 @@ import AddEmployee from './AddEmployee';
 import ShowEmployee from './ShowEmployee';
 import Invoice from './Invoice';
 import EmployeeDashboard from '../EmployeeDashboard';
-
+import './components/layout.css'; 
 // Components from the new frontend
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
@@ -17,31 +17,30 @@ import JobPosting from './pages/JobPosting';
 import HeroSection from './components/HeroSection';
 import EmployeeLogin from './pages/EmployeeLogin';
 import AdminLogin from './pages/AdminLogin';
-
-///Job post///
 import CreateJobPost from './pages/CreateJobPost';
 
-function App() {
-  const location = useLocation(); // Get the current route
 
-  // Define routes where the Navbar should be shown
+function App() {
+  const location = useLocation(); 
+
+  
   const showNavbarRoutes = ["/", "/job-posting", "/employee-login", "/admin-login"];
 
-  // Check if the current route is in the showNavbarRoutes array
+  
   const shouldShowNavbar = showNavbarRoutes.includes(location.pathname);
 
   return (
     <div className="app-container">
-      {shouldShowNavbar && <Navbar />} {/* Conditionally render Navbar */}
-      <Layout> {/* Layout from the new frontend */}
+      {shouldShowNavbar && <Navbar />} 
+      <Layout> 
         <Routes>
-          {/* Routes from the new frontend */}
+          
           <Route path="/" element={<HeroSection />} />
           <Route path="/job-posting" element={<JobPosting />} />
           <Route path="/employee-login" element={<EmployeeLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
 
-          {/* Routes from the old frontend */}
+          
           <Route path="/employeedash/:id" element={<EmployeeDashboard/>}/>
           <Route path="/employee" element={<Employee />} />
           <Route path="/employee/invoice/:id" element={<Invoice />} />
@@ -54,7 +53,7 @@ function App() {
   );
 }
 
-// Wrap the App component with Router
+
 function Root() {
   return (
     <Router>
