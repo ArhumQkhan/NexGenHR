@@ -1,22 +1,21 @@
 import React from "react";
 import CardItem from "./cardItem";
-import "./Cards.css"; // Import the CSS file for styling
-
+import "./Cards.css";
+import { motion } from "framer-motion";
 
 function Cards() {
-  // Example card data (replace with your actual data)
   const cardData = [
     {
       id: 1,
       src: "autoR.jpeg",
       text: "AI-driven job posting & candidate screening.",
-      label: "Automated Recruitment System ",
+      label: "Automated Recruitment System",
       path: "/services",
     },
     {
       id: 2,
       src: "SHRM.jpeg",
-      text: " Automate employee records, leave management, and performance tracking using AI-powered analytics.",
+      text: "Automate employee records, leave management, and performance tracking using AI-powered analytics.",
       label: "Smart HR Management",
       path: "/services",
     },
@@ -27,24 +26,28 @@ function Cards() {
       label: "Payroll & Finance Automation",
       path: "/services",
     },
-
   ];
 
   return (
     <div className="cards">
-      
-      <h1>The Services We Provide!</h1>
       <div className="cards__container">
         <div className="cards__wrapper">
           <ul className="cards__items">
-            {cardData.map((card) => (
-              <CardItem
+            {cardData.map((card, index) => (
+              <motion.div
                 key={card.id}
-                src={card.src}
-                text={card.text}
-                label={card.label}
-                path={card.path}
-              />
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.3 }}
+                viewport={{ once: true }}
+              >
+                <CardItem
+                  src={card.src}
+                  text={card.text}
+                  label={card.label}
+                  path={card.path}
+                />
+              </motion.div>
             ))}
           </ul>
         </div>

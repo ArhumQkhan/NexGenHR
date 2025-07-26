@@ -1,40 +1,40 @@
-/* Full-page container */
+
 .hero-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100vw;
   height: 100vh;
-  background: white; /* White background for the landing page */
+  background: white; 
   padding: 0 5%;
-  overflow: hidden; /* Prevent overflow issues */
+  overflow: hidden; 
 }
 
-/* Left Side - Text Content */
+
 .hero-text {
   width: 50%;
   text-align: left;
-  color: black; /* Ensuring readability on white */
-  z-index: 1; /* Ensure text is above the image */
+  color: #1976d2; 
+  z-index: 1; 
 }
 
 .hero-text h1 {
   text-align: left;
   font-size: 3rem;
-  margin-bottom: 1rem; /* Consistent margin */
-  line-height: 1.2; /* Improve readability */
+  margin-bottom: 1rem; 
+  line-height: 1.2; 
 }
 
 .hero-text p {
   font-size: 1.2rem;
-  margin-bottom: 2rem; /* Consistent margin */
-  color: #555; /* Slightly lighter text for better contrast */
+  margin-bottom: 2rem; 
+  color: #1976d2; 
 }
 
-/* Buttons */
+
 .hero-btns {
   display: flex;
-  gap: 1.5rem; /* Consistent gap */
+  gap: 1.5rem; 
 }
 
 .btns {
@@ -47,31 +47,30 @@
 }
 
 .btn--primary {
-  background-color: #0e0d0d;
+  background-color: #1976d2;
   color: white;
 }
 
 .btn--primary:hover {
-  background-color: #151413;
-  transform: scale(1.05); /* Slight zoom effect */
+  background-color: #0d47a1;
+  transform: scale(1.05); 
 }
 
-/* Right Side - Image */
+
 .hero-image {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1; /* Ensure image is above the video (if any) */
+  z-index: 1; 
 }
 
 .hero-image img {
   width: 100%;
   max-width: 500px;
-  max-height: 500px; /* Prevent image from becoming too large */
+  max-height: 500px; 
   height: auto;
-  /*border-radius: 10px; /* Optional for rounded corners */
-  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  
 }
 
 
@@ -92,12 +91,12 @@
 
   .hero-image {
     width: 100%;
-    margin-top: 2rem; /* Add spacing between text and image */
+    margin-top: 2rem; 
   }
 
   .hero-image img {
     max-width: 100%;
-    max-height: 300px; /* Adjust for smaller screens */
+    max-height: 300px; 
   }
 
   .hero-btns {
@@ -113,4 +112,24 @@
     position: static;
     margin-top: 1rem;
   }
+}
+.info-section {
+  width: 100%;
+  padding: 80px 40px;
+  text-align: center;
+  background: none; 
+  color: #0d47a1; 
+  margin-top: 50px;
+}
+
+.info-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-section p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #0d47a1; 
 }
