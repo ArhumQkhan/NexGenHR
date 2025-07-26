@@ -236,7 +236,7 @@ function Salary() {
         <div className='invoice-container1'>
             <div className='invoice-container2'>
                 <div className='leftNav'>
-                    <Link to="/" className='leftNavBtn'>Home</Link>
+                    <Link to="/employee" className='leftNavBtn'>Home</Link>
                     <Link className='leftNavBtn'>CV screening</Link>
                     <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
                 </div>

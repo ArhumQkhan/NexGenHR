@@ -1,3 +1,15 @@
+* {
+  box-sizing: border-box;
+    padding: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.content2{
+  width: 100%;
+  padding: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 .employee-container1{
     display: flex;
     justify-content: center; /* Align children side by side */
@@ -7,7 +19,7 @@
 .employee-container2 {
     height: 100vh;
     width: 25%;
-    background-color: #212529;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
 }
 .leftNav {
     display: flex;

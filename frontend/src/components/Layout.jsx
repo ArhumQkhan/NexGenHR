@@ -8,7 +8,7 @@ function Layout({ children }) {
       <div className="background-container"></div>
 
       
-      <div className="content">{children}</div>
+      <div className="layout-content">{children}</div>
 
       
       <Footer />
