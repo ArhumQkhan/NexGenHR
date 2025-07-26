@@ -29,5 +29,6 @@ async function createUser(username, password, role) {
 
 // Example usage
 // createUser('hruser123@gmail.com', 'password123', 'HR');
-createUser('employee@gmail.com', 'password12345', 'Employee');
-//createUser('hr@gmail.com', 'password', 'HR');
+// createUser('employee@gmail.com', 'password12345', 'Employee');
+// createUser('hr@gmail.com', 'password', 'HR');
+createUser('f2021266004@umt.edu.pk', 'password123', 'HR');

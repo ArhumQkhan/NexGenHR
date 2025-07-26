@@ -18,6 +18,10 @@ import HeroSection from './components/HeroSection';
 import EmployeeLogin from './pages/EmployeeLogin';
 import AdminLogin from './pages/AdminLogin';
 import CreateJobPost from './pages/CreateJobPost';
+import ResetPassword from "./components/ResetPassword";
+
+<Route path="/reset-password" element={<ResetPassword />} />
+
 
 
 function App() {
@@ -40,7 +44,7 @@ function App() {
           <Route path="/employee-login" element={<EmployeeLogin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
 
-          
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/employeedash/:id" element={<EmployeeDashboard/>}/>
           <Route path="/employee" element={<Employee />} />
           <Route path="/employee/invoice/:id" element={<Invoice />} />
