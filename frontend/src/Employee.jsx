@@ -108,30 +108,7 @@ function Employee() {
   ];
 
   return (
-    <div>
-      <nav className="my-navbar">
-        <a className="my-navbar-brand" href="#">NexGenHR</a>
-
-        <div className="my-navbar-collapse">
-          <ul className="my-navbar-nav">
-            <li className="my-nav-item my-dropdown">
-              <a
-                className="my-nav-link my-dropdown-toggle"
-                href="#"
-                onClick={(e) => e.preventDefault()} // prevent default for demo
-              >
-                <i className="bi bi-person-circle"></i>
-              </a>
-              <div className="my-dropdown-menu">
-                <a className="my-dropdown-item" href="#">Action</a>
-                <a className="my-dropdown-item" href="#">Another action</a>
-                <div className="my-dropdown-divider"></div>
-                <a className="my-dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    
     <div className="employee-container1">
       <div className="employee-container2">
         <div className="leftNav">
@@ -196,7 +173,6 @@ function Employee() {
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
