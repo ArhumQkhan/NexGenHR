@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import AdminSidebar from "./components/adminSidebar";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import DataTable from "react-data-table-component"; // Importing React Data Table Component
+import DataTable from "react-data-table-component"; 
 import "./Employee.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,26 +18,20 @@ function Employee() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/employee-login", { replace: true }); // Redirect if no token
-    }
     fetchEmployees();
   }, []);
 
-
-
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/employee`);
+      const response = await axios.get(`http://localhost:3001/employee`);
       setEmployee(response.data);
     } catch (error) {
       console.error(error);
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // ✅ Clear auth token (or whatever key you used)
-    navigate("/admin-login", { replace: true }); // ✅ Redirect to login page
+    localStorage.removeItem("token"); 
+    navigate("/admin-login"); 
   };
 
   const handleSearch = async () => {
@@ -47,7 +42,7 @@ function Employee() {
 
     try {
       const response = await axios.get(
-        `http://localhost:3000/employee/search`,
+        `http://localhost:3001/employee/search`,
         {
           params: { q: searchTerm },
         }
@@ -60,7 +55,7 @@ function Employee() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/employee/${id}`);
+      await axios.delete(`http://localhost:3001/employee/${id}`);
       fetchEmployees();
     } catch (err) {
       console.log(err);
@@ -112,35 +107,32 @@ function Employee() {
       ),
     },
   ];
-    if (!localStorage.getItem("authToken")) {
-      return null; // or a loading spinner
-  }
+const customStyles = {
+  table: {
+    style: {
+      backgroundColor: "transparent",
+      boxShadow: "none",
+    },
+  },
+  headRow: {
+    style: {
+      backgroundColor: "transparent",
+    },
+  },
+  rows: {
+    style: {
+      backgroundColor: "transparent",
+    },
+  },
+};
 
-  return (
-    
-    <div className="employee-container1">
-      <div className="employee-container2">
-        <div className="leftNav">
-          <Link to="/employee" className="leftNavBtn">
-            Home
-          </Link>
-          <a
-            href="http://localhost:8501"
-            className="leftNavBtn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CV Screening
-          </a>
-          <Link to="/admin/create-job" className="leftNavBtn">
-            Job Posting
-          </Link>
-          <button className="leftNavBtn" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      </div>
+return (
+  <div style={{ display: "flex", minHeight: "100vh" }}>
+    {/* Sidebar */}
+    <AdminSidebar />
 
+    {/* Main Content */}
+    <div style={{ flex: 1, padding: "20px" }}>
       <div className="employee-container3">
         <div className="data">
           <div className="custom">
@@ -172,17 +164,19 @@ function Employee() {
           <DataTable
             columns={columns}
             data={employee}
-            pagination // Enables pagination
-            paginationPerPage={5} // Number of rows per page
-            paginationRowsPerPageOptions={[5, 10, 15]} // Dropdown options for rows per page
-            highlightOnHover // Adds a hover effect to rows
-            striped // Adds striped row styling
-            responsive // Makes the table responsive
+            pagination
+            paginationPerPage={5}
+            paginationRowsPerPageOptions={[5, 10, 15]}
+            highlightOnHover
+            striped
+            responsive
+            customStyles={customStyles}
           />
+
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
-
 export default Employee;
