@@ -13,6 +13,9 @@ frontend/node_modules/
 .DS_Store
 Thumbs.db
 
+# venv
+CV-screening/venv/
+
 # Build output
 dist/
 build/

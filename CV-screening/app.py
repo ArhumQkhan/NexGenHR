@@ -3,6 +3,8 @@ import PyPDF2
 import docx
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
+load_dotenv()
 
 # Initialize Gemini
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
