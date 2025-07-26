@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+
 const AdminJobPostList = () => {
   const [jobs, setJobs] = useState([]);
 
@@ -34,17 +35,17 @@ const AdminJobPostList = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <h2>Posted Jobs</h2>
-      <table className="table table-bordered mt-3">
-        <thead>
+      <table className="table table-striped table-hover table-bordered shadow-sm rounded">
+        <thead className="table-primary">
           <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Company</th>
-            <th>Location</th>
-            <th>Description</th>
-            <th>Action</th>
+            <th scope="col">No.</th>
+            <th scope="col">Title</th>
+            <th scope="col">Company</th>
+            <th scope="col">Location</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -68,7 +69,9 @@ const AdminJobPostList = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="6">No job posts available.</td>
+              <td colSpan="6" className="text-center text-muted py-3">
+                No job posts available.
+              </td>
             </tr>
           )}
         </tbody>

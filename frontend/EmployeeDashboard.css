@@ -1,10 +1,114 @@
-.show-container1 {
+* {
+  box-sizing: border-box;
+}
+.content1{
+  width: 100%;
+  padding: 0px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+/* ///////////////////////////////////// NAVBAR /////////////////////////////////////////////////////////////////////////*/
+.my-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Make sure it stays on top */
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  padding: 0.5rem 1rem;
+  font-family: sans-serif;
+}
+
+
+.my-navbar-brand {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+.my-navbar-collapse {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.my-navbar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.my-nav-item {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.my-nav-link {
+  text-decoration: none;
+  color: #000;
+  padding: 0.5rem;
+  display: inline-block;
+}
+
+.my-dropdown:hover .my-dropdown-menu {
+  display: block;
+}
+
+.my-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 160px;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.my-dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.my-dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.my-dropdown-divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 0.25rem 0;
+}
+
+/* ///////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* .show-container1 {
+  display: flex;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+} */
+.employee-container1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 0px; /* Adjust based on navbar height */
+  background: white;
 }
-.show-container2 {
+
+
+/* .show-container2 {
   height: 100vh;
   width: 25%;
   background-color: #212529;
@@ -20,13 +124,42 @@
   padding: 0 6px 0 6px;
   border: none;
   font-weight: 600;
+} */
+
+/* .show-container1 {
+  display: block; /* remove any flex layout that splits width */
+  /* width: 100%;
+  padding-top: 70px;
+} 
+
+.show-container3 {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
 }
 
-.image-container {
-  display: flex;
+.data {
   width: 100%;
-  margin-bottom: 20px;
+  max-width: 1200px; 
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+} */
+
+
+.image-container {
+  width: 100%;           /* Take full width of parent */
+  display: flex;         /* Optional: align internal content */
+  justify-content: center; /* Optional: center inner elements like image or name-text */
+  padding: 1rem 0;       /* Optional: spacing */
+  box-sizing: border-box;
 }
+
 
 .image-section {
   width: 50%;
@@ -69,7 +202,7 @@
   font-size: 24px;
 }
 
-.show-container3 {
+/* .show-container3 {
   display: flex;
   width: 75%;
   height: 100vh;
@@ -77,19 +210,34 @@
   align-items: center;
   margin: 0;
   padding: 20px;
-}
-.data {
+} */
+.employee-container3 {
   width: 100%;
-  background-color: #ffffff;
-  border-radius: 0.375rem;
-  padding: 1.5rem;
-  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  box-sizing: border-box;
 }
+
+.employee-data {
+  width: 75% !important;
+  max-width: none !important;
+  background: #ffffff; /* for visibility */
+  border-radius: 0.375rem;
+  align-items: center;
+  height: 700px;
+}
+
+
+
+
 
 /*TABLE*/
 
 .custom-table {
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
   border-collapse: separate;
   border-spacing: 0;
   background-color: #f8f9fa; /* Light background */
