@@ -17,7 +17,7 @@ import JobPosting from './pages/JobPosting';
 import HeroSection from './components/HeroSection';
 import EmployeeLogin from './pages/EmployeeLogin';
 import AdminLogin from './pages/AdminLogin';
-import JobAdminPage from './components/JobAdminPage';
+import CreateJobPost from './pages/CreateJobPost';
 
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
           <Route path="/employee/add-employee" element={<AddEmployee />} />
           <Route path="/employee/show/:id" element={<ShowEmployee />} />
           <Route path="/admin/create-job" element={<JobAdminPage />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
       </Layout>
     </div>

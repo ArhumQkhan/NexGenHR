@@ -55,7 +55,42 @@ function AdminLogin() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Login</button>
-          <a href="#" className="forgot-password">Forgot Password?</a>
+          <a
+            href="#"
+            className="forgot-password"
+            onClick={async (e) => {
+              e.preventDefault();
+              if (!username) {
+                alert("Please enter your email before resetting the password.");
+                return;
+              }
+
+              try {
+                const response = await fetch("http://localhost:3001/forgot-password", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ username }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                  alert(data.message); // "OTP sent to email"
+                  localStorage.setItem("resetEmail", username); // Store for use in ResetPassword.jsx
+                  window.location.href = "/reset-password"; // Or use navigate()
+                } else {
+                  alert(data.message); // Show "User not found" if applicable
+                }
+              } catch (err) {
+                console.error("Forgot Password Error:", err);
+                alert("An error occurred. Please try again.");
+              }
+            }}
+          >
+            Forgot Password?
+          </a>
+
+
         </form>
       </div>
 

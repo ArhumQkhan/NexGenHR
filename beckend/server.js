@@ -137,11 +137,89 @@ app.post("/employee/send-salary-slip/:id", (req, res) => {
 
 
 /////////////////////////////////////////////////////////
+//Backend Route to Send OTP
+app.post("/forgot-password", (req, res) => {
+  console.log("Forgot password request received", req.body);
+  const { username } = req.body;
+
+  if (!username) return res.status(400).json({ message: "Email is required." });
+
+  // Check if user exists
+  const checkUser = "SELECT * FROM users WHERE username = ?";
+  db.query(checkUser, [username], (err, result) => {
+    if (err) return res.status(500).json({ message: "DB error." });
+    if (result.length === 0) return res.status(404).json({ message: "User not found." });
+
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store OTP in password_resets table
+    const insertOTP = "INSERT INTO password_resets (username, otp) VALUES (?, ?)";
+    db.query(insertOTP, [username, otp], (otpErr) => {
+      if (otpErr) return res.status(500).json({ message: "OTP save failed." });
+
+      // Send OTP via email
+      const mailOptions = {
+        from: '"NexGenHR Support" <nexgenhr21@gmail.com>',
+        to: username,
+        subject: "Password Reset Code",
+        html: `<p>Your password reset code is: <b>${otp}</b>. It is valid for 10 minutes.</p>`,
+      };
+
+      transporter.sendMail(mailOptions, (emailErr) => {
+        if (emailErr) {
+          console.error("✉️ Email send error:", emailErr);
+          return res.status(500).json({ message: "Failed to send email." });
+        }
+
+        console.log("✅ OTP email sent to:", username); // ADD THIS
+        res.json({ message: "OTP sent to email." });
+      });
+
+    });
+  });
+});
+
+/////////
+//Backend Route to Reset Password
+app.post("/reset-password", async (req, res) => {
+  const { username, otp, newPassword } = req.body;
+
+  if (!username || !otp || !newPassword) {
+    return res.status(400).json({ message: "All fields are required." });
+  }
+
+  // Get latest OTP for this user
+  const query = `
+    SELECT * FROM password_resets 
+    WHERE username = ? 
+    ORDER BY created_at DESC 
+    LIMIT 1
+  `;
+
+  db.query(query, [username], async (err, results) => {
+    if (err) return res.status(500).json({ message: "DB error." });
+
+    if (results.length === 0 || results[0].otp !== otp) {
+      return res.status(400).json({ message: "Invalid or expired OTP." });
+    }
+
+    // OTP is valid — update password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updateQuery = "UPDATE users SET password = ? WHERE username = ?";
+
+    db.query(updateQuery, [hashedPassword, username], (updateErr) => {
+      if (updateErr) return res.status(500).json({ message: "Password update failed." });
+
+      res.json({ message: "Password has been reset successfully." });
+    });
+  });
+});
 
 
 
 
-/////////////////////////////////////////////////////////
+//ADMIN LOGIN
 
 const JWT_SECRET = 'your_jwt_secret_key_here'; 
 
