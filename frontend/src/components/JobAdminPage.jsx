@@ -7,7 +7,7 @@ const JobAdminPage = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate("/dashboard"); // update path if needed
+    navigate("/Employee"); // update path if needed
   };
 
   return (
