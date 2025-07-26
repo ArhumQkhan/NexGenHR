@@ -17,8 +17,14 @@ function Employee() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/employee-login", { replace: true }); // Redirect if no token
+    }
     fetchEmployees();
   }, []);
+
+
 
   const fetchEmployees = async () => {
     try {
@@ -29,8 +35,8 @@ function Employee() {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("token"); // ✅ Clear auth token (or whatever key you used)
-    navigate("/admin-login"); // ✅ Redirect to login page
+    localStorage.removeItem("authToken"); // ✅ Clear auth token (or whatever key you used)
+    navigate("/admin-login", { replace: true }); // ✅ Redirect to login page
   };
 
   const handleSearch = async () => {
@@ -106,6 +112,9 @@ function Employee() {
       ),
     },
   ];
+    if (!localStorage.getItem("authToken")) {
+      return null; // or a loading spinner
+  }
 
   return (
     

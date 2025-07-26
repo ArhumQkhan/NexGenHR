@@ -17,6 +17,10 @@ export default function EmployeeDashboard() {
   const [formData, setFormData] = useState({}); // State to store the updated form data
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/employee-login", { replace: true }); // Redirect if no token
+    }
     axios
       .get(`http://localhost:3000/employeedash/${id}`)
       .then((res) => {
@@ -59,6 +63,10 @@ export default function EmployeeDashboard() {
       console.log(error);
     }
   };
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/employee-login", { replace: true }); // also use replace here
+  };
 
   const handleKeyDown = (event, field) => {
     if (event.key === "Enter") {
@@ -67,6 +75,10 @@ export default function EmployeeDashboard() {
       handleSave(field, formData[field]); // Save the data when 'Enter' is pressed
     }
   };
+  if (!localStorage.getItem("authToken")) {
+    return null; // or a loading spinner
+  }
+
 
   return (
     <div className="content1">
@@ -84,10 +96,7 @@ export default function EmployeeDashboard() {
                 <i className="bi bi-person-circle"></i>
               </a>
               <div className="my-dropdown-menu">
-                <a className="my-dropdown-item" href="#">Action</a>
-                <a className="my-dropdown-item" href="#">Another action</a>
-                <div className="my-dropdown-divider"></div>
-                <a className="my-dropdown-item" href="#">Something else here</a>
+                <button className="my-dropdown-item" onClick={handleLogout}>Logout</button>
               </div>
             </li>
           </ul>
