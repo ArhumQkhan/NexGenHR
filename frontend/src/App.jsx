@@ -17,7 +17,8 @@ import JobPosting from './pages/JobPosting';
 import HeroSection from './components/HeroSection';
 import EmployeeLogin from './pages/EmployeeLogin';
 import AdminLogin from './pages/AdminLogin';
-import CreateJobPost from './pages/CreateJobPost';
+import JobAdminPage from './components/JobAdminPage';
+import ResetPassword from './components/ResetPassword';
 
 
 function App() {
