@@ -18,7 +18,7 @@ export default function EmployeeDashboard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/employeedash/${id}`)
+      .get(`http://localhost:3000/employeedash/${id}`)
       .then((res) => {
         setShowEmployee(res.data);
         setFormData(res.data[0]); // Initialize form data with fetched employee details
@@ -51,7 +51,7 @@ export default function EmployeeDashboard() {
 
     try {
       await axios.put(
-        `http://localhost:3001/employeedash/update/${id}`,
+        `http://localhost:3000/employeedash/update/${id}`,
         updatedData
       ); // Send updated data to backend
       setEditField(null); // Exit edit mode

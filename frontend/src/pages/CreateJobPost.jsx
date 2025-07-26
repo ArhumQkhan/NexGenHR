@@ -16,7 +16,7 @@ const CreateJobPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3001/job-posts', {
+      const res = await fetch('http://localhost:3000/job-posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

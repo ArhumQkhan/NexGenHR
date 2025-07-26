@@ -41,7 +41,7 @@ export default function AddEmployee() {
     
         console.log("Sending Data:", employeeData); //  Debugging Request Data
     
-        axios.post('http://localhost:3001/employee/add-employee', employeeData)
+        axios.post('http://localhost:3000/employee/add-employee', employeeData)
             .then(res => {
                 console.log(" Success:", res.data);
                 navigate('/employee');

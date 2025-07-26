@@ -22,7 +22,7 @@ function Employee() {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/employee`);
+      const response = await axios.get(`http://localhost:3000/employee`);
       setEmployee(response.data);
     } catch (error) {
       console.error(error);
@@ -41,7 +41,7 @@ function Employee() {
 
     try {
       const response = await axios.get(
-        `http://localhost:3001/employee/search`,
+        `http://localhost:3000/employee/search`,
         {
           params: { q: searchTerm },
         }
@@ -54,7 +54,7 @@ function Employee() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/employee/${id}`);
+      await axios.delete(`http://localhost:3000/employee/${id}`);
       fetchEmployees();
     } catch (err) {
       console.log(err);

@@ -7,7 +7,7 @@ const JobPosting = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/job-posts")
+    fetch("http://localhost:3000/job-posts")
       .then((res) => res.json())
       .then((data) => setJobs(data))
       .catch((err) => console.error("Error fetching jobs:", err));

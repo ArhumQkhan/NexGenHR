@@ -18,7 +18,7 @@ const JobCard = ({ title, company, location, description }) => {
     formData.append("cv", cvFile);
     formData.append("jobTitle", title); // Optional: send job title too
 
-    fetch("http://localhost:3001/apply", {
+    fetch("http://localhost:3000/apply", {
       method: "POST",
       body: formData,
     })

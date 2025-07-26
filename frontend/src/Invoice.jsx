@@ -31,7 +31,7 @@ function Salary() {
 
     useEffect(() => {
         // Fetch employee data from API
-            axios.get(`http://localhost:3001/employee/invoice/${id}`)
+            axios.get(`http://localhost:3000/employee/invoice/${id}`)
             .then(response => {
                 setEmployee(response.data);
                 calculateDaysBetween(response.data);
@@ -212,7 +212,7 @@ function Salary() {
     };
     //////////////////////////
     function sendSalarySlipEmail(id) {
-    fetch(`http://localhost:3001/employee/send-salary-slip/${id}`, {
+    fetch(`http://localhost:3000/employee/send-salary-slip/${id}`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json",

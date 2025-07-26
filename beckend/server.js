@@ -441,11 +441,21 @@ app.post("/apply", upload.single("cv"), (req, res) => {
     res.status(200).json({ message: "CV uploaded successfully!", jobId, cvPath });
 });
 
+/////////////////Del Job Posts///////////////
+app.delete('/job-posts/:id', (req, res) => {
+  const jobId = req.params.id;
+  const sql = 'DELETE FROM job_posts WHERE id = ?';
+  db.query(sql, [jobId], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (result.affectedRows === 0) return res.status(404).json({ message: 'Job not found' });
+    res.json({ message: 'Job post deleted successfully' });
+  });
+});
 
 
 ////////////////////////////////////////////////////////
 
 
-app.listen(3001, () => {
+app.listen(3000, () => {
     console.log("Listening..");
 });
