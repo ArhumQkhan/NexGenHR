@@ -3,14 +3,16 @@ import PyPDF2
 import docx
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
-# Initialize Gemini
+load_dotenv()
+
+
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Load Gemini model (use correct name)
 model = genai.GenerativeModel("models/gemini-2.5-pro")
 
-# Function to extract text from PDF
+
 def extract_text_from_pdf(file):
     pdf_reader = PyPDF2.PdfReader(file)
     text = ""
@@ -18,7 +20,7 @@ def extract_text_from_pdf(file):
         text += page.extract_text()
     return text
 
-# Function to extract text from DOCX
+
 def extract_text_from_docx(file):
     doc = docx.Document(file)
     text = ""
@@ -26,7 +28,7 @@ def extract_text_from_docx(file):
         text += para.text + "\n"
     return text
 
-# Function to process file and extract text
+
 def extract_text(file):
     if file.type == "application/pdf":
         return extract_text_from_pdf(file)
@@ -35,7 +37,7 @@ def extract_text(file):
     else:
         return ""
 
-# Function to get match percent using Gemini
+
 def get_match_percent(jd, cv_text):
     prompt = f"""
 You are an ATS CV screening assistant.
