@@ -4,6 +4,90 @@ html {
     padding: 0;
 }
 
+/* New layout styles similar to ShowEmployee */
+.invoice-wrapper {
+  padding: 30px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.action-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.invoice-content {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Remove old side navbar styles */
+.invoice-container1,
+.invoice-container2,
+.invoice-container3,
+.leftNav,
+.leftNavBtn {
+  display: none;
+}
+
+/* Back button styles similar to ShowEmployee */
+.back-button {
+  background-color: #3a9bed;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+/* Action buttons styles */
+.action-controls button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.action-controls button:hover {
+  background-color: #1e7e34;
+}
+
+.action-controls button:first-child {
+  background-color: #007bff;
+}
+
+.action-controls button:first-child:hover {
+  background-color: #0056b3;
+}
+
 .flex1 {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
@@ -86,45 +170,6 @@ html {
     color: #999;
   }
 
-.invoice-container1{
-    display: flex;
-    justify-content: flex-start; /* Align children side by side */
-    align-items: flex-start;     /* Align children at the top */
-    min-height: 100vh;
-    width: 100%;
-}
-.invoice-container2 {
-    width: 20%;
-    height: 1150px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-}
-.leftNav {
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-}
-.leftNavBtn {
-    height: 40px;
-    margin: 0;
-    padding: 0 6px 0 6px;
-    border: none;
-    font-weight: 600;
-}
-
-.top {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.invoice-container3 {
-    display: flex;
-    width: 75%;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 20px;
-}
 .data1 {
     width: 100%;
     background-color: #ffffff;
@@ -150,14 +195,14 @@ html {
     }
     
     .custom-table thead {
-        background-color: #343a40;
-        color: #ffffff;
+        background-color: #2069b1 !important; /* Match topbar/footer color */
+        color: #ffffff !important;
         text-transform: uppercase; /* Uppercase header */
     }
     
     .custom-table tbody tr {
         background-color: #ffffff; /* White background for rows */
-        color: #212529;
+        color: #2069b1;
         transition: background-color 0.3s ease;
     }
     
@@ -234,4 +279,33 @@ html {
 .searchBtn:focus, .searchBtn:active {
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* Responsive adjustments for invoice */
+@media (max-width: 768px) {
+  .invoice-wrapper {
+    padding: 20px;
+  }
+  
+  .invoice-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .action-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .invoice-wrapper {
+    padding: 15px;
+  }
+  
+  .action-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

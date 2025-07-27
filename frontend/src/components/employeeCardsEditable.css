@@ -1,12 +1,46 @@
 .employee-card {
   background-color: #ffffff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   width: 100%;
-  max-width: 400px;
-  margin: 10px;
+  height: fit-content;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInUp 0.5s ease-out;
+  animation-fill-mode: both;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.employee-card.editing {
+  background-color: #f8f9ff;
+  border: 2px solid #e3f2fd;
+}
+
+.employee-card:nth-child(1) { animation-delay: 0.1s; }
+.employee-card:nth-child(2) { animation-delay: 0.2s; }
+.employee-card:nth-child(3) { animation-delay: 0.3s; }
+.employee-card:nth-child(4) { animation-delay: 0.4s; }
+.employee-card:nth-child(5) { animation-delay: 0.5s; }
+.employee-card:nth-child(6) { animation-delay: 0.6s; }
+.employee-card:nth-child(7) { animation-delay: 0.7s; }
+.employee-card:nth-child(8) { animation-delay: 0.8s; }
+.employee-card:nth-child(9) { animation-delay: 0.9s; }
+.employee-card:nth-child(10) { animation-delay: 1.0s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .employee-card:hover {
@@ -14,60 +48,134 @@
 }
 
 .employee-card-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #888;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 
 .employee-card-value {
   display: flex;
+  color: #3a9bed;
   justify-content: space-between;
   align-items: center;
+  flex-grow: 1;
+  margin-top: auto;
 }
 
-.edit-btn,
-.save-btn,
-.cancel-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
+.employee-card-value span {
   font-size: 1rem;
-  padding: 5px;
-  color: #007bff;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  color: #333;
+  word-break: break-word;
 }
 
-.edit-btn:hover {
-  color: #0056b3;
-}
 
-.save-btn {
-  color: #28a745;
-}
-
-.save-btn:hover {
-  color: #1e7e34;
-}
-
-.cancel-btn {
-  color: #dc3545;
-}
-
-.cancel-btn:hover {
-  color: #a71d2a;
-}
 
 .employee-card-edit {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-grow: 1;
+  margin-top: auto;
 }
 
-.employee-card-edit input {
-  flex: 1;
-  padding: 6px 10px;
+.employee-card-input {
+  width: 100%;
+  padding: 8px 12px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 2px solid #007bff;
   border-radius: 6px;
+  background-color: #f8f9fa;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+  min-width: 0;
 }
+
+.employee-card-input:focus {
+  outline: none;
+  border-color: #0056b3;
+  background-color: white;
+}
+
+.employee-card-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.employee-card-select:focus {
+  outline: none;
+  border-color: #0056b3;
+  background-color: white;
+}
+
+.employee-card-select:hover {
+  border-color: #0056b3;
+  background-color: #e3f2fd;
+}
+
+.employee-card-select option {
+  background-color: white;
+  color: #333;
+}
+
+.date-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.employee-card-date-input {
+  width: 100%;
+  padding: 8px 12px;
+  padding-right: 40px;
+  font-size: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+  color: #333;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.employee-card-date-input:focus {
+  outline: none;
+  border-color: #0056b3;
+  background-color: white;
+}
+
+.employee-card-date-input:hover {
+  border-color: #0056b3;
+  background-color: #e3f2fd;
+}
+
+.employee-card-date-input::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #007bff;
+  pointer-events: none;
+}
+

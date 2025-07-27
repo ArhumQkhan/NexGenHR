@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
 import { differenceInCalendarDays, eachDayOfInterval, isWeekend } from 'date-fns'; // Function to calculate date difference
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import Topbar from "./components/Topbar";
 import "./Invoice.css";
 
 function Salary() {
@@ -233,23 +234,22 @@ function Salary() {
 
 
     return (
-        <div className='invoice-container1'>
-            <div className='invoice-container2'>
-                <div className='leftNav'>
-                    <Link to="/employee" className='leftNavBtn'>Home</Link>
-                    <Link className='leftNavBtn'>CV screening</Link>
-                    <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
-                </div>
-            </div>
-
-            <div className='invoice-container3'>
-                <div className='data1'>
-                    <div className='top'>
+        <>
+            <Topbar />
+            <div className='invoice-wrapper'>
+                <div className='invoice-header'>
+                    <button className="back-button" onClick={() => window.history.back()}>
+                        ← Back
+                    </button>
+                    <div className="action-controls">
                         <button onClick={printPDF}>Download</button>
                         <button onClick={() => sendSalarySlipEmail(employee.employee_id)}>Send Salary Slip Email</button>
                     </div>
-                    <h3>Company Name</h3>
-                    <div id='salary-section' className='print-section'>
+                </div>
+                <div className='invoice-content'>
+                    <div className='data1'>
+                        <h3>Company Name</h3>
+                        <div id='salary-section' className='print-section'>
 
                        {/* <table className='custom-table'>
                             <thead>
@@ -450,6 +450,7 @@ function Salary() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
