@@ -3,7 +3,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import Topbar from "./components/Topbar";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+// import EmployeeCardEditable from './components/employeeCardsEditable';
+
 import './ShowEmployee.css';
 
 export default function ShowEmployee() {
@@ -46,264 +49,83 @@ export default function ShowEmployee() {
         }
     };
 
-    return (
-        <div className='show-container1'>
-            <div className='show-container2'>
-                <div className='leftNav'>
-                    <Link to="/employee" className='leftNavBtn'>Home</Link>
-                    <Link className='leftNavBtn'>CV screening</Link>
-                    <Link to="/admin/create-job" className="leftNavBtn">Job Posting</Link>
-                    
-                </div>
-            </div>
-            <div className='show-container3'>
-                <div className='data'>
-                    <table className='custom-table'>
-                        <thead>
-                            <tr>
-                                <td>#</td>
-                                <td>Details</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.keys(formData).length > 0 && (
-                                <>
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>{formData.employee_id}</td>
-                                    </tr>
+  return (
+    <>
+      <Topbar />
 
-                                    {/* First Name Row */}
-                                    <tr>
-                                        <td className='align-middle'>First Name</td>
-                                        <td>
-                                            {editField === 'first_name' ? (
-                                                <input
-                                                    type="text"
-                                                    value={formData.first_name}
-                                                    onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-                                                    onBlur={() => handleSave('first_name', formData.first_name)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'first_name')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.first_name}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('first_name')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Last Name Row */}
-                                    <tr>
-                                        <td className='align-middle'>Last Name</td>
-                                        <td>
-                                            {editField === 'last_name' ? (
-                                                <input
-                                                    type="text"
-                                                    value={formData.last_name}
-                                                    onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-                                                    onBlur={() => handleSave('last_name', formData.last_name)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'last_name')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.last_name}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('last_name')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Email Row */}
-                                    <tr>
-                                        <td className='align-middle'>Email</td>
-                                        <td>
-                                            {editField === 'em_email' ? (
-                                                <input
-                                                    type="text"
-                                                    value={formData.em_email}
-                                                    onChange={(e) => setFormData({ ...formData, em_email: e.target.value })}
-                                                    onBlur={() => handleSave('em_email', formData.em_email)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_email')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.em_email}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_email')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-                                    
-                                    {/* Add similar rows for all other fields like Address, Status, etc. */}
-
-                                    {/* Address Row */}
-                                    <tr>
-                                        <td className='align-middle'>Address</td>
-                                        <td>
-                                            {editField === 'em_address' ? (
-                                                <input
-                                                    type="text"
-                                                    value={formData.em_address}
-                                                    onChange={(e) => setFormData({ ...formData, em_address: e.target.value })}
-                                                    onBlur={() => handleSave('em_address', formData.em_address)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_address')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.em_address}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_address')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Status Row */}
-                                    <tr>
-                                        <td className='align-middle'>Status</td>
-                                        <td>
-                                            {editField === 'em_status' ? (
-                                                <select
-                                                    value={formData.em_status}
-                                                    onChange={(e) => setFormData({ ...formData, em_status: e.target.value })}
-                                                    onBlur={() => handleSave('em_status', formData.em_status)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_status')} // Listen for Enter key
-                                                    autoFocus
-                                                >
-                                                    <option value="ACTIVE">ACTIVE</option>
-                                                    <option value="INACTIVE">INACTIVE</option>
-                                                    <option value="RESIGNED">RESIGNED</option>
-                                                    <option value="RETIRED">RETIRED</option>
-                                                </select>
-                                            ) : (
-                                                <>
-                                                    {formData.em_status}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_status')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Gender Row */}
-                                    <tr>
-                                        <td className='align-middle'>Gender</td>
-                                        <td>
-                                            {editField === 'em_gender' ? (
-                                                <select
-                                                    value={formData.em_gender}
-                                                    onChange={(e) => setFormData({ ...formData, em_gender: e.target.value })}
-                                                    onBlur={() => handleSave('em_gender', formData.em_gender)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_gender')} // Listen for Enter key
-                                                    autoFocus
-                                                >
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Others">Others</option>
-                                                </select>
-                                            ) : (
-                                                <>
-                                                    {formData.em_gender}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_gender')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Phone Number Row */}
-                                    <tr>
-                                        <td className='align-middle'>Phone no.</td>
-                                        <td>
-                                            {editField === 'em_phone' ? (
-                                                <input
-                                                    type="text"
-                                                    value={formData.em_phone}
-                                                    onChange={(e) => setFormData({ ...formData, em_phone: e.target.value })}
-                                                    onBlur={() => handleSave('em_phone', formData.em_phone)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_phone')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.em_phone}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_phone')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Birthday Row */}
-                                    <tr>
-                                        <td className='align-middle'>Date of Birth</td>
-                                        <td>
-                                            {editField === 'em_birthday' ? (
-                                                <input
-                                                    type="date"
-                                                    value={formData.em_birthday}
-                                                    onChange={(e) => setFormData({ ...formData, em_birthday: e.target.value })}
-                                                    onBlur={() => handleSave('em_birthday', formData.em_birthday)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_birthday')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.em_birthday}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_birthday')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                    {/* Salary Row */}
-                                    <tr>
-                                        <td className='align-middle'>Salary</td>
-                                        <td>
-                                            {editField === 'em_salary' ? (
-                                                <input
-                                                    type="number"
-                                                    value={formData.em_salary}
-                                                    onChange={(e) => setFormData({ ...formData, em_salary: e.target.value })}
-                                                    onBlur={() => handleSave('em_salary', formData.em_salary)}
-                                                    onKeyDown={(e) => handleKeyDown(e, 'em_salary')} // Listen for Enter key
-                                                    autoFocus
-                                                />
-                                            ) : (
-                                                <>
-                                                    {formData.em_salary}{' '}
-                                                    <button className="btn button-light" onClick={() => handleEdit('em_salary')}>
-                                                        <FontAwesomeIcon icon={faPenToSquare} />
-                                                    </button>
-                                                </>
-                                            )}
-                                        </td>
-                                    </tr>
-
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                </div>    
-            </div>
+      <div className="show-wrapper">
+        <div className="show-card-row">
+          <EmployeeCardEditable
+            label="Employee ID"
+            value={formData.employee_id}
+          />
+          <EmployeeCardEditable
+            label="First Name"
+            value={formData.first_name}
+            isEditable
+            onSave={(val) => handleSave("first_name", val)}
+          />
+          <EmployeeCardEditable
+            label="Last Name"
+            value={formData.last_name}
+            isEditable
+            onSave={(val) => handleSave("last_name", val)}
+          />
         </div>
-    );
+
+        <div className="show-card-row">
+          <EmployeeCardEditable
+            label="Gender"
+            value={formData.em_gender}
+            isEditable
+            onSave={(val) => handleSave("em_gender", val)}
+          />
+          <EmployeeCardEditable
+            label="Status"
+            value={formData.em_status}
+            isEditable
+            onSave={(val) => handleSave("em_status", val)}
+          />
+        </div>
+
+        <div className="show-card-row">
+          <EmployeeCardEditable
+            label="Email"
+            value={formData.em_email}
+            isEditable
+            onSave={(val) => handleSave("em_email", val)}
+          />
+          <EmployeeCardEditable
+            label="Address"
+            value={formData.em_address}
+            isEditable
+            onSave={(val) => handleSave("em_address", val)}
+          />
+        </div>
+
+        <div className="show-card-row">
+          <EmployeeCardEditable
+            label="Phone Number"
+            value={formData.em_phone}
+            isEditable
+            onSave={(val) => handleSave("em_phone", val)}
+          />
+          <EmployeeCardEditable
+            label="Date of Birth"
+            value={formData.em_birthday}
+            isEditable
+            onSave={(val) => handleSave("em_birthday", val)}
+          />
+          <EmployeeCardEditable
+            label="Salary"
+            value={formData.em_salary}
+            isEditable
+            onSave={(val) => handleSave("em_salary", val)}
+          />
+        </div>
+      </div>
+    </>
+  );
 }
+
+
