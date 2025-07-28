@@ -10,6 +10,7 @@ import Lottie from "lottie-react";
 import totalEmployeesAnim from "./assets/lotties/totalEmployee.json";
 import newAnim from "./assets/lotties/newEmployee.json";
 import appliAnim from "./assets/lotties/jobApplications.json";
+import addEmployeeAnim from "./assets/lotties/addemployeeanim.json";
 import Topbar from "./components/Topbar";
 import {
   faEye,
@@ -170,8 +171,8 @@ const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
   <>
     <Topbar />
 
-    <div className="employee-container3">
-      <div className="data">
+    <div className="employee-container3" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', width: '100vw', background: '#f7fafd' }}>
+      <div className="data" style={{ width: '90%', maxWidth: '1500px', margin: '2rem auto', background: '#fff', borderRadius: '18px', boxShadow: '0 4px 24px rgba(0,0,0,0.07)', padding: '2.5rem 2.5rem 2rem 2.5rem', minHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
         <div className="dashboard-header-container">
   
           <div className="dashboard-search">
@@ -219,58 +220,59 @@ const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
             <p className="card-subtext">+15% from last quarter</p>
           </div>
         </div>
-                <div className="dashboard-charts">
-          <div className="chart-card">
-            <div className="chart-header">
-              <h3>Employees Performance</h3>
-              <div className="filter-buttons">
-                <button onClick={() => setPerformanceFilter("weekly")} className={performanceFilter === "weekly" ? "active" : ""}>Weekly</button>
-                <button onClick={() => setPerformanceFilter("monthly")} className={performanceFilter === "monthly" ? "active" : ""}>Monthly</button>
-              </div>
+        <div className="dashboard-charts">
+          {/* Add Employee Card */}
+          <div className="chart-card" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* Left side: heading and button */}
+            <div style={{ flex: 2, flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', height: '100%' }}>
+              <h3 style={{ color: '#111', fontWeight: 550, marginBottom: '1.2rem', marginTop: 0 }}>Add New Employee</h3>
+              <p style={{ color: '#444', fontSize: '1.05rem', marginBottom: '1.2rem', maxWidth: '90%' }}>
+                Easily add a new employee by entering their Name, Salary, Contact Information, and other details. This quick process helps you keep your records up to date and makes onboarding seamless for the admin.
+              </p>
+              <button
+                className="btn btn-primary wiggle-on-hover"
+                style={{ fontSize: '1.1rem', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 600, width: '76%', transition: 'transform 2s' }}
+                onClick={() => navigate('/employee/add')}
+              >
+                + Add Employee
+              </button>
             </div>
-            <BarChart width={300} height={200} data={performanceData}>
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#f9f9f9",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                }}
-              />
-              <Bar dataKey="performance" fill="#6f42c1" />
-            </BarChart>
+            {/* Right side: animation */}
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+              <Lottie animationData={addEmployeeAnim} loop={true} style={{ height: 320, maxWidth: 420 }} />
+            </div>
           </div>
 
+          {/* Employee Attendance Chart Card (unchanged) */}
           <div className="chart-card">
             <div className="chart-header">
               <h3>Employee Attendance</h3>
             </div>
-                <PieChart width={400} height={300} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-                  <Pie
-                    data={attendanceData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`} position="outside"
-                  >
-                    {attendanceData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={attendanceColors[index % attendanceColors.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-                <div className="attendance-legend">
-                  {attendanceData.map((entry, index) => (
-                    <div key={`legend-${index}`} className="legend-item">
-                      <span className="legend-color" style={{ backgroundColor: attendanceColors[index % attendanceColors.length] }}></span>
-                      {entry.name}
-                    </div>
-                  ))}
+            <PieChart width={400} height={300} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
+              <Pie
+                data={attendanceData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`} position="outside"
+              >
+                {attendanceData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={attendanceColors[index % attendanceColors.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+            <div className="attendance-legend">
+              {attendanceData.map((entry, index) => (
+                <div key={`legend-${index}`} className="legend-item">
+                  <span className="legend-color" style={{ backgroundColor: attendanceColors[index % attendanceColors.length] }}></span>
+                  {entry.name}
                 </div>
+              ))}
+            </div>
           </div>
         </div>
         <h3 className="employees-table-heading">Employees</h3>
