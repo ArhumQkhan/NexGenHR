@@ -66,7 +66,7 @@ function AdminLogin() {
               }
 
               try {
-                const response = await fetch("http://localhost:3001/forgot-password", {
+                const response = await fetch("http://localhost:3000/forgot-password", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ username }),

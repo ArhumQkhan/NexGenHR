@@ -6,8 +6,8 @@ function Topbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/admin-login");
+    localStorage.removeItem("authToken"); // ✅ Clear auth token (or whatever key you used)
+    navigate("/admin-login", { replace: true });
   };
 
   return (

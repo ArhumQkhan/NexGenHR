@@ -33,6 +33,10 @@ function Employee() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/admin-login", { replace: true }); // Redirect if no token
+    }
     fetchEmployees();
   }, []);
 
@@ -45,8 +49,8 @@ function Employee() {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("token"); // ✅ Clear auth token (or whatever key you used)
-    navigate("/admin-login"); // ✅ Redirect to login page
+    localStorage.removeItem("authToken"); // ✅ Clear auth token (or whatever key you used)
+    navigate("/admin-login", { replace: true });
   };
 
   const handleSearch = async () => {
@@ -154,6 +158,10 @@ const attendanceData = [
 ];
 
 const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
+  if (!localStorage.getItem("authToken")) {
+    return null; // or a loading spinner
+  }
+
     return (
   <>
     <Topbar />
