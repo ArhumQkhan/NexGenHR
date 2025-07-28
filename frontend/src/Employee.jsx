@@ -33,6 +33,7 @@ function Employee() {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     const token = localStorage.getItem("authToken");
     if (!token) {
       navigate("/admin-login", { replace: true }); // Redirect if no token
@@ -71,6 +72,9 @@ function Employee() {
       console.error(error);
     }
   };
+
+// counting number of active employees
+const activeCount = employee.filter(emp => emp.em_status === "ACTIVE").length;
 
   const handleDelete = async (id) => {
     try {
@@ -197,15 +201,15 @@ const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
           <div className="dashboard-card">
             <Lottie animationData={totalEmployeesAnim} loop={true} style={{ height: 100 }} />
             <h3>Total Employees</h3>
-            <p className="card-number">12600</p>
+            <p className="card-number">{activeCount}</p>
             <p className="card-subtext">+2% from last quarter</p>
           </div>
 
           <div className="dashboard-card">
             <Lottie animationData={newAnim} loop={true} style={{ height: 100 }} />
             <h3>New Employees</h3>
-            <p className="card-number">22</p>
-            <p className="card-subtext">+5% this month</p>
+            <p className="card-number">0</p>
+            <p className="card-subtext">+0% this month</p>
           </div>
 
           <div className="dashboard-card">
