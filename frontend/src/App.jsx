@@ -1,16 +1,16 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; // React Router
-import './app.css'; // Your custom CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
+import './app.css'; 
 
-// Components from the old frontend
+
 import Employee from './Employee';
 import AddEmployee from './AddEmployee';
 import ShowEmployee from './ShowEmployee';
 import Invoice from './Invoice';
 import EmployeeDashboard from '../EmployeeDashboard';
 import './components/layout.css'; 
-// Components from the new frontend
+
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 import JobPosting from './pages/JobPosting';

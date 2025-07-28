@@ -41,8 +41,8 @@ db.connect(err => {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'nexgenhr21@gmail.com',      // replace with your email
-    pass: 'vbkjqatovowklpfs',   // replace with your app password or email password
+    user: 'nexgenhr21@gmail.com',      
+    pass: 'vbkjqatovowklpfs',   
   },
 });
 // Email sender function
@@ -103,14 +103,14 @@ app.post("/employee/send-salary-slip/:id", (req, res) => {
     const employee = result[0];
 
     // Instead of sending only the base salary,
-    // we expect the final calculated salary and components to come from the frontend
+    ///final calculated salary and components to come from the frontend
     const {
       grossSalary,
       netSalary,
       leaveDeduction,
       monthlyIncomeTax,
       providentFund,
-    } = req.body; // Make sure these are passed from frontend
+    } = req.body; 
 
     const salaryData = {
       ...employee,
@@ -310,16 +310,7 @@ app.get('/employeedash/:id', (req,res) => {
 app.put('/employeedash/update/:id', (req, res) => {
     const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
     const values = [
-        // req.body.firstName,
-        // req.body.lastName,
-        // req.body.email,
-        // req.body.password,
-        // req.body.address,
-        // req.body.status,
-        // req.body.gender,
-        // req.body.number,
-        // req.body.dateSelected,
-        // req.body.salary
+     
         req.body.first_name,
         req.body.last_name,
         req.body.em_email,
@@ -340,7 +331,7 @@ app.put('/employeedash/update/:id', (req, res) => {
 });
 
 app.post('/employee/add-employee', (req, res) => {
-    console.log("🛠 Received Data:", req.body); // ✅ Debugging the received data
+    console.log("🛠 Received Data:", req.body); 
 
     const sql = `INSERT INTO employee (first_name, last_name, em_email, em_password, em_address, em_status, em_gender, em_phone, em_birthday, em_salary) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -394,16 +385,7 @@ app.post('/employee/add-employee', (req, res) => {
 app.put('/employee/update/:id', (req, res) => {
     const sql = "UPDATE employee set `first_name` = ?, `last_name` = ?, `em_email` = ?, `em_password` = ?, `em_address` = ?, `em_status` = ?, `em_gender` = ?, `em_phone` = ?, `em_birthday` = ?, `em_salary` = ? WHERE employee_id = ?";
     const values = [
-        // req.body.firstName,
-        // req.body.lastName,
-        // req.body.email,
-        // req.body.password,
-        // req.body.address,
-        // req.body.status,
-        // req.body.gender,
-        // req.body.number,
-        // req.body.dateSelected,
-        // req.body.salary
+
         req.body.first_name,
         req.body.last_name,
         req.body.em_email,
@@ -442,11 +424,10 @@ app.get('/employee/show/:id', (req,res) => {
         if(err) return res.json(err); 
         return res.json(data); 
     })
-}); //API to get data from database
+}); 
 
 //employee salary
 app.get('/employee/invoice/:id', (req, res) => {
-    // Query to get employee's base salary, paid and unpaid leaves
     const sql = `SELECT employee_id, first_name, last_name, em_salary, paid_leaves, unpaid_leaves
                  FROM employee WHERE employee_id = ?`;
     const id = req.params.id;
@@ -455,7 +436,7 @@ app.get('/employee/invoice/:id', (req, res) => {
         if (err) return res.status(500).json({ error: err.message });
         
         if (data.length > 0) {
-            return res.json(data[0]); // Send back the first row (since it should only return one employee)
+            return res.json(data[0]); 
         } else {
             return res.status(404).json({ message: "Employee not found" });
         }
@@ -482,7 +463,7 @@ app.get('/employee/search', (req, res) => {
 
 
 
-////////////////////////////////////////////////////////
+/////////////////////JOB POST///////////////////////////////////
 
 // Get all job posts
 app.get('/job-posts', (req, res) => {

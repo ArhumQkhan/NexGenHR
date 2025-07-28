@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./resetPassword.css"; // Create this file for styles
+import "./resetPassword.css"; 
 
 function ResetPassword() {
   const [username, setUsername] = useState(localStorage.getItem("resetEmail") || "");
@@ -22,7 +22,7 @@ function ResetPassword() {
     if (response.ok) {
       alert("Password reset successful! Redirecting to login...");
       setTimeout(() => {
-        window.location.href = "/"; // or navigate("/admin-login");
+        window.location.href = "/"; 
       }, 2000);
     }
   };

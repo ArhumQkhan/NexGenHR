@@ -98,17 +98,17 @@ footer {
   z-index: -1;
 }
 
-/* Main content inside the layout */
+
 .layout-content {
   flex: 1;
-  z-index: 1; /* Keeps content above the video */
+  z-index: 1; 
   padding: 20px;
-  color: #fff; /* Ensures text is readable over the video */
+  color: #fff; 
 }
 
 /* Login form container styling */
 .login-form-container {
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.6); 
   padding: 2rem;
   border-radius: 10px;
   max-width: 400px;

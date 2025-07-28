@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./postCards.css"; // Styles for the card and buttons
+import "./postCards.css"; 
 
 const JobCard = ({ title, company, location, description }) => {
   const [cvFile, setCvFile] = useState(null);
@@ -16,7 +16,7 @@ const JobCard = ({ title, company, location, description }) => {
 
     const formData = new FormData();
     formData.append("cv", cvFile);
-    formData.append("jobTitle", title); // Optional: send job title too
+    formData.append("jobTitle", title); 
 
     fetch("http://localhost:3000/apply", {
       method: "POST",

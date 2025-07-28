@@ -11,9 +11,9 @@ const db = mysql.createConnection({
 // Hash the password before inserting it into the database
 async function createUser(username, password, role) {
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);  // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);  
 
-    // Insert the user into the database
+    ////// Insert the user into the database
     const query = 'INSERT INTO users (username, password, role) VALUES (?, ?, ?)';
     db.query(query, [username, hashedPassword, role], (err, result) => {
       if (err) {

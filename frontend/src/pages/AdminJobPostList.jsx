@@ -24,7 +24,7 @@ const AdminJobPostList = () => {
       });
       const data = await res.json();
       alert(data.message);
-      fetchJobs(); // Reload after deletion
+      fetchJobs(); 
     } catch (error) {
       console.error('Failed to delete job post:', error);
     }

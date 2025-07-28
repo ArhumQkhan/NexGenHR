@@ -6,10 +6,8 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
-# Initialize Gemini
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Load Gemini model (use correct name)
 model = genai.GenerativeModel("models/gemini-2.5-pro")
 
 # Function to extract text from PDF
@@ -53,7 +51,7 @@ Based on semantic and skill relevance, give ONLY the overall match percentage be
     response = model.generate_content(prompt)
     try:
         percent = float(response.text.strip())
-        percent = max(0, min(100, percent))  # ensure within 0-100
+        percent = max(0, min(100, percent))  
     except:
         percent = 0.0
     return percent

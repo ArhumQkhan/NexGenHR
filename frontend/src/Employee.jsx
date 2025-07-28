@@ -2,7 +2,7 @@ Employee.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import DataTable from "react-data-table-component"; // Importing React Data Table Component
+import DataTable from "react-data-table-component"; 
 import "./Employee.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,7 +38,7 @@ function Employee() {
 
     const token = localStorage.getItem("authToken");
     if (!token) {
-      navigate("/admin-login", { replace: true }); // Redirect if no token
+      navigate("/admin-login", { replace: true }); 
     }
     fetchEmployees();
     fetchPdfCount();
@@ -48,7 +48,7 @@ function Employee() {
   const fetchPdfCount = async () => {
   try {
     const response = await axios.get("http://localhost:3000/upload-count");
-    setPdfCount(response.data.count); // 👈 This sets the number of PDFs
+    setPdfCount(response.data.count); 
   } catch (error) {
     console.error("Failed to fetch PDF count:", error);
   }
@@ -62,7 +62,7 @@ function Employee() {
     }
   };
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // ✅ Clear auth token (or whatever key you used)
+    localStorage.removeItem("authToken"); 
     navigate("/admin-login", { replace: true });
   };
 
@@ -175,7 +175,7 @@ const attendanceData = [
 
 const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
   if (!localStorage.getItem("authToken")) {
-    return null; // or a loading spinner
+    return null; 
   }
 
     return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import employeeAnim from "../assets/lotties/employeeLogin.json";
-import "./loginForm.css"; // Your existing CSS file
+import "./loginForm.css"; 
 
 function EmployeeLogin() {
   const navigate = useNavigate();
@@ -77,11 +77,11 @@ function EmployeeLogin() {
                 const data = await response.json();
 
                 if (response.ok) {
-                  alert(data.message); // "OTP sent to email"
-                  localStorage.setItem("resetEmail", username); // Store for use in ResetPassword.jsx
-                  window.location.href = "/reset-password"; // Or use navigate()
+                  alert(data.message); 
+                  localStorage.setItem("resetEmail", username); 
+                  window.location.href = "/reset-password"; 
                 } else {
-                  alert(data.message); // Show "User not found" if applicable
+                  alert(data.message); 
                 }
               } catch (err) {
                 console.error("Forgot Password Error:", err);

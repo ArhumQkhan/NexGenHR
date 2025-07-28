@@ -10,11 +10,11 @@ export default function ShowEmployee() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showEmployee, setShowEmployee] = useState([]);
-    const [formData, setFormData] = useState({}); // State to store the updated form data
+    const [formData, setFormData] = useState({}); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isEditMode, setIsEditMode] = useState(false); // Global edit mode state
-    const [tempFormData, setTempFormData] = useState({}); // Temporary data for editing
+    const [isEditMode, setIsEditMode] = useState(false); 
+    const [tempFormData, setTempFormData] = useState({}); 
 
     useEffect(() => {
         const fetchEmployee = async () => {
@@ -24,8 +24,8 @@ export default function ShowEmployee() {
                 const res = await axios.get(`http://localhost:3000/employee/show/${id}`);
                 setShowEmployee(res.data);
                 if (res.data && res.data.length > 0) {
-                    setFormData(res.data[0]); // Initialize form data with fetched employee details
-                    setTempFormData(res.data[0]); // Initialize temp data as well
+                    setFormData(res.data[0]); 
+                    setTempFormData(res.data[0]); 
                 }
             } catch (err) {
                 console.error('Error fetching employee:', err);
@@ -40,18 +40,18 @@ export default function ShowEmployee() {
 
     const handleEditClick = () => {
         setIsEditMode(true);
-        setTempFormData({ ...formData }); // Copy current data to temp
+        setTempFormData({ ...formData }); 
     };
 
     const handleCancelEdit = () => {
         setIsEditMode(false);
-        setTempFormData({ ...formData }); // Reset temp data to original
+        setTempFormData({ ...formData }); 
     };
 
     const handleSaveAll = async () => {
         try {
             await axios.put(`http://localhost:3000/employee/update/${id}`, tempFormData);
-            setFormData({ ...tempFormData }); // Update main form data
+            setFormData({ ...tempFormData }); 
             setIsEditMode(false);
         } catch (error) {
             console.error('Error updating employee:', error);
@@ -66,14 +66,14 @@ export default function ShowEmployee() {
         if (!dateString) return '';
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return dateString;
-        return date.toLocaleDateString('en-CA'); // Format as YYYY-MM-DD for display
+        return date.toLocaleDateString('en-CA'); 
     };
 
     const formatDateForInput = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return '';
-        return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD for input
+        return date.toISOString().split('T')[0]; 
     };
 
     if (loading) {

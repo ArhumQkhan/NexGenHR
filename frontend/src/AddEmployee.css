@@ -1,10 +1,10 @@
 
 .add-container {
-    display: flex; /* Equivalent to d-flex */
-    height: 150vh; /* Equivalent to vh-150 (150% of the viewport height) */
-    background-color: #f8f9fa; /* Equivalent to bg-light (light gray color) */
-    justify-content: center; /* Equivalent to justify-content-center */
-    align-items: center; /* Equivalent to align-items-center */
+    display: flex; 
+    height: 150vh; 
+    background-color: #f8f9fa; 
+    justify-content: center; 
+    align-items: center; 
 }
 
 .add-container2 {
@@ -43,48 +43,48 @@
 }
 
 .box {
-    width: 100%; /* Equivalent to w-25 */
-    background-color: #343a40; /* Equivalent to bg-dark (dark gray color) */
-    border-radius: 0.25rem; /* Equivalent to rounded (Bootstrap default border-radius) */
-    padding: 1rem; /* Equivalent to p-3 (Bootstrap padding size) */
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Equivalent to shadow-lg (large shadow) */
+    width: 100%; 
+    background-color: #343a40; 
+    border-radius: 0.25rem; 
+    padding: 1rem; 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
 }
 
 
                                                                                 /*BUTTON*/
 
 .custom-btn {
-    display: inline-block; /* Makes the button inline but retains block-level styles */
-    font-weight: 400; /* Normal font weight */
-    text-align: center; /* Center text inside the button */
-    vertical-align: middle; /* Aligns the button with surrounding text */
-    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    display: inline-block; 
+    font-weight: 400; 
+    text-align: center; 
+    vertical-align: middle; 
+    cursor: pointer;
     /* background-color: transparent; Default background color, will be overridden by .custom-btn-primary */
-    border: 1px solid transparent; /* Default border, will be overridden by .custom-btn-primary */
-    border-radius: 0.25rem; /* Rounded corners */
-    padding: 0.375rem 0.75rem; /* Padding inside the button */
-    font-size: 1rem; /* Font size */
-    line-height: 1.5; /* Line height */
-    transition: all 0.15s ease-in-out; /* Smooth transition for hover and focus effects */
+    border: 1px solid transparent; 
+    border-radius: 0.25rem; 
+    padding: 0.375rem 0.75rem; 
+    font-size: 1rem; 
+    line-height: 1.5; 
+    transition: all 0.15s ease-in-out; 
 }
 
 
                                                                                 /*PRIMARY BUTTON*/
 .custom-btn-primary {
-    background-color: #007bff; /* Primary background color */
-    color: #ffffff; /* White text color */
-    border-color: #007bff; /* Border color matching the background */
+    background-color: #007bff; 
+    color: #ffffff; 
+    border-color: #007bff; 
 }
 
 .custom-btn-primary:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    border-color: #004085; /* Darker border color on hover */
-    text-decoration: none; /* Removes underline from text */
+    background-color: #0056b3; 
+    border-color: #004085; 
+    text-decoration: none; 
 }
 
 .custom-btn-primary:focus, .custom-btn-primary.focus {
-    outline: 0; /* Removes default outline */
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); /* Box shadow for focus state */
+    outline: 0; 
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); 
 }
 
 

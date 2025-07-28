@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"; // Import DatePicker styles
-import { differenceInCalendarDays, eachDayOfInterval, isWeekend } from 'date-fns'; // Function to calculate date difference
+import "react-datepicker/dist/react-datepicker.css"; 
+import { differenceInCalendarDays, eachDayOfInterval, isWeekend } from 'date-fns'; 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Topbar from "./components/Topbar";
@@ -11,16 +11,16 @@ import "./Invoice.css";
 
 function Salary() {
     const { id } = useParams();
-    const [employee, setEmployee] = useState({});  // Single employee object
+    const [employee, setEmployee] = useState({});  
     const [grossSalary, setGrossSalary] = useState(0);
     const [netSalary, setNetSalary] = useState(0);
-    const [startDate, setStartDate] = useState(null); // Starting date
-    const [endDate, setEndDate] = useState(null);     // Ending date
-    const [daysBetween, setDaysBetween] = useState(0); // Days between dates
-    const [workingDays, setWorkingDays] = useState(0); // Working days excluding weekends
+    const [startDate, setStartDate] = useState(null); 
+    const [endDate, setEndDate] = useState(null);     
+    const [daysBetween, setDaysBetween] = useState(0); 
+    const [workingDays, setWorkingDays] = useState(0); 
     const [conveyAllowance, setConveyAllowance] = useState(0);
     const [houseAllowance, setHouseAllowance] = useState(0);
-    const [conveyPercentage, setConveyPercentage] = useState(false); // State to toggle between amount and percentage mode
+    const [conveyPercentage, setConveyPercentage] = useState(false); 
     const [housePercentage, setHousePercentage] = useState(false);
     const [providentPercentage, setProvidentPercentage] = useState(false);
     const [providentFund, setProvidentFund] = useState(0);
@@ -31,7 +31,7 @@ function Salary() {
     
 
     useEffect(() => {
-        // Fetch employee data from API
+        
             axios.get(`http://localhost:3000/employee/invoice/${id}`)
             .then(response => {
                 setEmployee(response.data);
@@ -42,12 +42,12 @@ function Salary() {
     }, [id]);
 
     const printPDF = () => {
-        const input = document.getElementById('salary-section'); // capture the section you want as PDF
+        const input = document.getElementById('salary-section'); 
         html2canvas(input, {scale:3}).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'mm', 'a4');
 
-            // You can adjust the image dimensions and position here
+            
             const imgWidth = 210;
             const pageHeight = 297;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -74,12 +74,12 @@ function Salary() {
     // Function to calculate the number of working days excluding weekends
     const calculateWorkingDays = (start, end) => {
         if (start && end) {
-            // Generate an array of all dates between start and end
+
             const allDays = eachDayOfInterval({ start, end });
 
-            // Filter out weekends (Saturday, Sunday)
+            
             const weekdays = allDays.filter(day => !isWeekend(day));
-            // Set the total number of weekdays (working days)
+            
             setWorkingDays(weekdays.length);
         }
     };
@@ -96,17 +96,17 @@ function Salary() {
     useEffect(() => {
         if (employee && employee.em_salary && workingDays > 0) {
             calculateFinalSalary(employee);
-            // calculateIncomeTax(employee.em_salary);
+            
         }
     }, [employee, workingDays, conveyAllowance, houseAllowance, conveyPercentage]);
 
-    // Calculate net salary whenever gross salary is updated
+    
     useEffect(() => {
         if (employee && grossSalary > 0) {
-            calculateIncomeTax(grossSalary); // Calculate tax when gross salary changes
+            calculateIncomeTax(grossSalary); 
             calculatedNetSalary(employee);
         }
-    }, [grossSalary, providentFund]); // Trigger net salary calculation when gross salary changes
+    }, [grossSalary, providentFund]); 
 
 
     const calculateFinalSalary = (employeeData) => {
@@ -119,19 +119,19 @@ function Salary() {
 
         //for Convey Allowance
         if (conveyPercentage) {
-            // Calculate conveyance allowance as a percentage of the base salary
+            
             conveyAmount = ((em_salary * parseFloat(conveyAllowance)) / 100);
         } else {
-            // Use conveyance allowance as a fixed amount
+        
             conveyAmount = parseFloat(conveyAllowance);
         }
 
         //For House Rent Allowance
         if (housePercentage) {
-            // Calculate house allowance as a percentage of the base salary
+            
             houseAmount = ((em_salary * parseFloat(houseAllowance)) / 100);
         } else {
-            // Use house allowance as a fixed amount
+            
             houseAmount = parseFloat(houseAllowance);
         }
 
@@ -150,22 +150,22 @@ function Salary() {
 
     // Function to calculate income tax based on gross salary
     const calculateIncomeTax = (grossSalary) => {
-        let annualSalary = grossSalary * 12; // Convert monthly salary to annual
+        let annualSalary = grossSalary * 12; 
         let incomeTax = 0;
 
         // Income tax rules based on annual salary
         if (annualSalary <= 600000) {
-            incomeTax = 0; // No tax for income up to 600000
+            incomeTax = 0; 
         } else if (annualSalary <= 1200000) {
-            incomeTax = (annualSalary - 600000) * 0.05; // 5% of amount exceeding 600000
+            incomeTax = (annualSalary - 600000) * 0.05; 
         } else if (annualSalary <= 2200000) {
-            incomeTax = 30000 + (annualSalary - 1200000) * 0.15; // 15% of amount exceeding 1200000
+            incomeTax = 30000 + (annualSalary - 1200000) * 0.15; 
         } else if (annualSalary <= 3200000) {
-            incomeTax = 180000 + (annualSalary - 2200000) * 0.25; // 25% of amount exceeding 2200000
+            incomeTax = 180000 + (annualSalary - 2200000) * 0.25; 
         } else if (annualSalary <= 4100000) {
-            incomeTax = 430000 + (annualSalary - 3200000) * 0.30; // 30% of amount exceeding 3200000
+            incomeTax = 430000 + (annualSalary - 3200000) * 0.30; 
         } else {
-            incomeTax = 700000 + (annualSalary - 4100000) * 0.35; // 35% of amount exceeding 4100000
+            incomeTax = 700000 + (annualSalary - 4100000) * 0.35; 
         }
 
         let monthlyTax = incomeTax / 12; // Convert annual tax to monthly
@@ -251,72 +251,7 @@ function Salary() {
                         <h3>Company Name</h3>
                         <div id='salary-section' className='print-section'>
 
-                       {/* <table className='custom-table'>
-                            <thead>
-                                <tr>
-                                    <td>Field</td>
-                                    <td>Details</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    
-                                    <tr>
-                                        <td>Employee Name</td>
-                                        <td>{employee.first_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Base Salary</td>
-                                        <td>{employee.em_salary}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Month (Start Date)</td>
-                                        <td>
-                                            <DatePicker
-                                                selected={startDate}
-                                                onChange={(date) => {
-                                                    setStartDate(date);
-                                                    calculateWorkingDays(date, endDate); // Calculate days excluding weekends
-                                                    calculateDaysBetween(date, endDate); // Calculate days on start date
-                                                }}
-                                                placeholderText="Select Start Date"
-                                                dateFormat="yyyy-MM-dd"
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Month (End Date)</td>
-                                        <td>
-                                            <DatePicker
-                                                selected={endDate}
-                                                onChange={(date) => {
-                                                    setEndDate(date);
-                                                    calculateWorkingDays(startDate, date); // Calculate days excluding weekends
-                                                    calculateDaysBetween(startDate, date); // Calculate days on end date
-                                                }}
-                                                placeholderText="Select End Date"
-                                                dateFormat="yyyy-MM-dd"
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Days</td>
-                                        <td>{daysBetween}</td> {/* Display the calculated number of working days 
-                                    </tr> 
-                                    <tr>
-                                        <td>Total Working Days</td>
-                                        <td>{workingDays}</td> {/* Display the calculated number of working days 
-                                    </tr>                                
-                                    <tr>
-                                        <td>Paid Leaves</td>
-                                        <td>{employee.paid_leaves}</td>
-                                    </tr>
-
-                                
-                            </tbody> 
-
-                        </table>*/}
-
+                      
                         <div>
                             <h5>{employee.first_name}</h5>
                             {/* <h5>{employee.}</h5> */}
@@ -327,8 +262,8 @@ function Salary() {
                                     selected={startDate}
                                     onChange={(date) => {
                                         setStartDate(date);
-                                        calculateWorkingDays(date, endDate); // Calculate days excluding weekends
-                                        calculateDaysBetween(date, endDate); // Calculate days on start date
+                                        calculateWorkingDays(date, endDate); 
+                                        calculateDaysBetween(date, endDate); 
                                     }}
                                     placeholderText="Select Start Date"
                                     dateFormat="yyyy-MM-dd"
@@ -337,8 +272,8 @@ function Salary() {
                                     selected={endDate}
                                     onChange={(date) => {
                                         setEndDate(date);
-                                        calculateWorkingDays(startDate, date); // Calculate days excluding weekends
-                                        calculateDaysBetween(startDate, date); // Calculate days on end date
+                                        calculateWorkingDays(startDate, date); 
+                                        calculateDaysBetween(startDate, date); 
                                     }}
                                     placeholderText="Select End Date"
                                     dateFormat="yyyy-MM-dd"
