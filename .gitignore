@@ -19,5 +19,3 @@ CV-screening/venv/
 # Build output
 dist/
 build/
-
-beckend/upload/*.pdf
