@@ -243,7 +243,7 @@ const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
               <button
                 className="btn btn-primary wiggle-on-hover"
                 style={{ fontSize: '1.1rem', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 600, width: '76%', transition: 'transform 2s' }}
-                onClick={() => navigate('/employee/add')}
+                onClick={() => navigate('/employee/add-employee')}
               >
                 + Add Employee
               </button>
