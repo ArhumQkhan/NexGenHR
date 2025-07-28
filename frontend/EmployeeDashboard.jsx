@@ -1,387 +1,171 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import "./EmployeeDashboard.css";
+import EmployeeCardEditable from "./src/components/employeeCardsEditable";
+import EmployeeDashboardTopbar from "./src/components/EmployeeDashboardTopbar";
+import "./src/ShowEmployee.css";
 
 export default function EmployeeDashboard() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const fileInputRef = useRef(null);
-  const [showEmployee, setShowEmployee] = useState([]);
-  const [editField, setEditField] = useState(null); // State to track which field is in edit mode
-  const [formData, setFormData] = useState({}); // State to store the updated form data
+  const [editField, setEditField] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      navigate("/employee-login", { replace: true }); // Redirect if no token
-    }
     axios
       .get(`http://localhost:3000/employeedash/${id}`)
       .then((res) => {
-        setShowEmployee(res.data);
-        setFormData(res.data[0]); // Initialize form data with fetched employee details
+        setFormData(res.data[0] || {});
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError("Failed to load employee data");
+        setLoading(false);
+      });
   }, [id]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // base64 preview
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageClick = () => {
-    fileInputRef.current.click(); // trigger file input click
-  };
-
-  const handleEdit = (field) => {
-    setEditField(field); // Set the field in edit mode
-  };
-
+  const handleEdit = (field) => setEditField(field);
   const handleSave = async (field, value) => {
-    const updatedData = { ...formData, [field]: value }; // Update the specific field in formData
-    setFormData(updatedData); // Update local state
-
+    const updatedData = { ...formData, [field]: value };
+    setFormData(updatedData);
     try {
       await axios.put(
         `http://localhost:3000/employeedash/update/${id}`,
         updatedData
-      ); // Send updated data to backend
-      setEditField(null); // Exit edit mode
+      );
+      setEditField(null);
     } catch (error) {
-      console.log(error);
+      setError("Failed to update employee data");
     }
   };
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/employee-login", { replace: true }); // also use replace here
-  };
-
   const handleKeyDown = (event, field) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevents default form behavior
-      console.log(`Enter key pressed for field: ${field}`); // Debugging message
-      handleSave(field, formData[field]); // Save the data when 'Enter' is pressed
+      event.preventDefault();
+      handleSave(field, formData[field]);
     }
   };
-  if (!localStorage.getItem("authToken")) {
-    return null; // or a loading spinner
-  }
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/employee-login", { replace: true });
+  };
 
-  return (
-    <div className="content1">
-      <nav className="my-navbar">
-        <a className="my-navbar-brand" href="#">NexGenHR</a>
-
-        <div className="my-navbar-collapse">
-          <ul className="my-navbar-nav">
-            <li className="my-nav-item my-dropdown">
-              <a
-                className="my-nav-link my-dropdown-toggle"
-                href="#"
-                onClick={(e) => e.preventDefault()} // prevent default for demo
-              >
-                <i className="bi bi-person-circle"></i>
-              </a>
-              <div className="my-dropdown-menu">
-                <button className="my-dropdown-item" onClick={handleLogout}>Logout</button>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <div className="employee-container1">
-        <div className="employee-container3">
-          <div className="employee-data">
-            <div className="image-container">
-
-              <div className="name-text">
-                <h2 style={{color: "black"}}>{formData.first_name} {formData.last_name}</h2>
-                
-              </div>
-            </div>
-
-            <table className="custom-table">
-              <thead>
-                <tr>
-                  <td>#</td>
-                  <td>Details</td>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(formData).length > 0 && (
-                  <>
-                    <tr>
-                      <td>ID</td>
-                      <td>{formData.employee_id}</td>
-                    </tr>
-
-                    {/* Email Row */}
-                    <tr>
-                      <td className="align-middle">Email</td>
-                      <td>
-                        {editField === "em_email" ? (
-                          <input
-                            type="text"
-                            value={formData.em_email}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_email: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_email", formData.em_email)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_email")} // Listen for Enter key
-                            autoFocus
-                          />
-                        ) : (
-                          <>
-                            {formData.em_email}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_email")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Add similar rows for all other fields like Address, Status, etc. */}
-
-                    {/* Address Row */}
-                    <tr>
-                      <td className="align-middle">Address</td>
-                      <td>
-                        {editField === "em_address" ? (
-                          <input
-                            type="text"
-                            value={formData.em_address}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_address: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_address", formData.em_address)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_address")} // Listen for Enter key
-                            autoFocus
-                          />
-                        ) : (
-                          <>
-                            {formData.em_address}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_address")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Status Row */}
-                    <tr>
-                      <td className="align-middle">Status</td>
-                      <td>
-                        {editField === "em_status" ? (
-                          <select
-                            value={formData.em_status}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_status: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_status", formData.em_status)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_status")} // Listen for Enter key
-                            autoFocus
-                          >
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-                            <option value="RESIGNED">RESIGNED</option>
-                            <option value="RETIRED">RETIRED</option>
-                          </select>
-                        ) : (
-                          <>
-                            {formData.em_status}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_status")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Gender Row */}
-                    <tr>
-                      <td className="align-middle">Gender</td>
-                      <td>
-                        {editField === "em_gender" ? (
-                          <select
-                            value={formData.em_gender}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_gender: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_gender", formData.em_gender)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_gender")} // Listen for Enter key
-                            autoFocus
-                          >
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Others">Others</option>
-                          </select>
-                        ) : (
-                          <>
-                            {formData.em_gender}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_gender")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Phone Number Row */}
-                    <tr>
-                      <td className="align-middle">Phone no.</td>
-                      <td>
-                        {editField === "em_phone" ? (
-                          <input
-                            type="text"
-                            value={formData.em_phone}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_phone: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_phone", formData.em_phone)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_phone")} // Listen for Enter key
-                            autoFocus
-                          />
-                        ) : (
-                          <>
-                            {formData.em_phone}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_phone")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Birthday Row */}
-                    <tr>
-                      <td className="align-middle">Date of Birth</td>
-                      <td>
-                        {editField === "em_birthday" ? (
-                          <input
-                            type="date"
-                            value={formData.em_birthday}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_birthday: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_birthday", formData.em_birthday)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_birthday")} // Listen for Enter key
-                            autoFocus
-                          />
-                        ) : (
-                          <>
-                            {formData.em_birthday}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_birthday")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-
-                    {/* Salary Row */}
-                    <tr>
-                      <td className="align-middle">Salary</td>
-                      <td>
-                        {editField === "em_salary" ? (
-                          <input
-                            type="number"
-                            value={formData.em_salary}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                em_salary: e.target.value,
-                              })
-                            }
-                            onBlur={() =>
-                              handleSave("em_salary", formData.em_salary)
-                            }
-                            onKeyDown={(e) => handleKeyDown(e, "em_salary")} // Listen for Enter key
-                            autoFocus
-                          />
-                        ) : (
-                          <>
-                            {formData.em_salary}{" "}
-                            <button
-                              className="btn button-light"
-                              onClick={() => handleEdit("em_salary")}
-                            >
-                              <FontAwesomeIcon icon={faPenToSquare} />
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  </>
-                )}
-              </tbody>
-            </table>
+  if (loading) {
+    return (
+      <>
+        <EmployeeDashboardTopbar onLogout={handleLogout} />
+        <div className="show-wrapper">
+          <div style={{ textAlign: "center", padding: "50px" }}>
+            <div className="loading-spinner"></div>
+            <p>Loading employee data...</p>
           </div>
         </div>
+      </>
+    );
+  }
+  if (error) {
+    return (
+      <>
+        <EmployeeDashboardTopbar onLogout={handleLogout} />
+        <div className="show-wrapper">
+          <div
+            style={{
+              textAlign: "center",
+              padding: "50px",
+              color: "red",
+            }}
+          >
+            <p>{error}</p>
+            <button
+              className="back-button"
+              onClick={() => navigate("/employee")}
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <EmployeeDashboardTopbar onLogout={handleLogout} />
+      <div className="show-wrapper">
+        <div
+          className="dashboard-header"
+          style={{ textAlign: "center", margin: "2rem 0" }}
+        >
+          <h2>Welcome, {formData.first_name}!</h2>
+          <p>Here's your profile information.</p>
+        </div>
+        <div className="show-card-row">
+          <EmployeeCardEditable
+            label="Employee ID"
+            value={formData.employee_id}
+            isEditable={false}
+          />
+          <EmployeeCardEditable
+            label="First Name"
+            value={formData.first_name}
+            isEditable={editField === "first_name"}
+            onSave={(val) => handleSave("first_name", val)}
+          />
+          <EmployeeCardEditable
+            label="Last Name"
+            value={formData.last_name}
+            isEditable={editField === "last_name"}
+            onSave={(val) => handleSave("last_name", val)}
+          />
+          <EmployeeCardEditable
+            label="Gender"
+            value={formData.em_gender}
+            isEditable={editField === "em_gender"}
+            onSave={(val) => handleSave("em_gender", val)}
+          />
+          <EmployeeCardEditable
+            label="Status"
+            value={formData.em_status}
+            isEditable={editField === "em_status"}
+            onSave={(val) => handleSave("em_status", val)}
+          />
+          <EmployeeCardEditable
+            label="Email"
+            value={formData.em_email}
+            isEditable={editField === "em_email"}
+            onSave={(val) => handleSave("em_email", val)}
+          />
+          <EmployeeCardEditable
+            label="Address"
+            value={formData.em_address}
+            isEditable={editField === "em_address"}
+            onSave={(val) => handleSave("em_address", val)}
+          />
+          <EmployeeCardEditable
+            label="Phone Number"
+            value={formData.em_phone}
+            isEditable={editField === "em_phone"}
+            onSave={(val) => handleSave("em_phone", val)}
+          />
+          <EmployeeCardEditable
+            label="Date of Birth"
+            value={formData.em_birthday}
+            isEditable={editField === "em_birthday"}
+            onSave={(val) => handleSave("em_birthday", val)}
+          />
+          <EmployeeCardEditable
+            label="Salary"
+            value={formData.em_salary}
+            isEditable={editField === "em_salary"}
+            onSave={(val) => handleSave("em_salary", val)}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
