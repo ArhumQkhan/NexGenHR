@@ -30,6 +30,7 @@ import {
 function Employee() {
   const [employee, setEmployee] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [pdfCount, setPdfCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,8 +40,18 @@ function Employee() {
       navigate("/admin-login", { replace: true }); // Redirect if no token
     }
     fetchEmployees();
+    fetchPdfCount();
   }, []);
 
+
+  const fetchPdfCount = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/upload-count");
+    setPdfCount(response.data.count); // 👈 This sets the number of PDFs
+  } catch (error) {
+    console.error("Failed to fetch PDF count:", error);
+  }
+  }; 
   const fetchEmployees = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/employee`);
@@ -215,8 +226,8 @@ const attendanceColors = ["#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
           <div className="dashboard-card">
             <Lottie animationData={appliAnim} loop={true} style={{ height: 100 }} />
             <h3>Job Applications</h3>
-            <p className="card-number">1186</p>
-            <p className="card-subtext">+15% from last quarter</p>
+            <p className="card-number">{pdfCount}</p>
+            <p className="card-subtext">+0% from last quarter</p>
           </div>
         </div>
                 <div className="dashboard-charts">

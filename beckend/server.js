@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const multer = require("multer");
 const path = require("path");
 const nodemailer = require('nodemailer');
-
+const fs = require("fs");
 
 
 
@@ -272,6 +272,21 @@ app.post('/login', (req, res) => {
   
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+//counting number of cvs
+app.get("/upload-count", (req, res) => {
+  const uploadDir = path.join(__dirname, "uploads");
+
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) {
+      console.error("Error reading upload folder:", err);
+      return res.status(500).json({ error: "Unable to read upload folder" });
+    }
+
+    const pdfCount = files.filter(file => file.endsWith(".pdf")).length;
+    res.json({ count: pdfCount });
+  });
+});
 //////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/employee', (req,res) => {
