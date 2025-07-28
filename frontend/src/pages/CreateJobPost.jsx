@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import './CreateJobPost.css'; // optional for styles
+import './CreateJobPost.css';
 
 const CreateJobPost = () => {
   const [form, setForm] = useState({
@@ -31,14 +31,14 @@ const CreateJobPost = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Create Job Post</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="title" value={form.title} onChange={handleChange} className="form-control mb-2" placeholder="Job Title" required />
-        <input name="company" value={form.company} onChange={handleChange} className="form-control mb-2" placeholder="Company" required />
-        <input name="location" value={form.location} onChange={handleChange} className="form-control mb-2" placeholder="Location" required />
-        <textarea name="description" value={form.description} onChange={handleChange} className="form-control mb-3" placeholder="Description" />
-        <button type="submit" className="btn btn-primary">Create</button>
+    <div className="create-job-form-container">
+      <h2 className="create-job-form-title">Create Job Post</h2>
+      <form onSubmit={handleSubmit} className="create-job-form">
+        <input name="title" value={form.title} onChange={handleChange} placeholder="Job Title" required />
+        <input name="company" value={form.company} onChange={handleChange} placeholder="Company" required />
+        <input name="location" value={form.location} onChange={handleChange} placeholder="Location" required />
+        <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={4} />
+        <button type="submit">Create</button>
       </form>
     </div>
   );

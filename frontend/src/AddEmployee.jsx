@@ -1,194 +1,113 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Datepicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
-import './AddEmployee.css';
+import Topbar from "./components/Topbar";
+import EmployeeCardEditable from './components/employeeCardsEditable';
+import './ShowEmployee.css';
 
 export default function AddEmployee() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [address, setAddress] = useState('');
-    const [status, setStatus] = useState('ACTIVE');
-    const [gender, setGender] = useState('Male');
-    const [number, setNumber] = useState('');
-    const [dateSelected, setDateSelected] = useState(null);
-    const [salary, setSalary] = useState('');
-    const [department, setDepartment] = useState('');
-    const [designation, setDesignation] = useState('');
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        em_email: '',
+        em_address: '',
+        em_status: 'ACTIVE',
+        em_gender: 'Male',
+        em_phone: '',
+        em_birthday: '',
+        em_salary: ''
+    });
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        
-        const formattedDate = dateSelected ? dateSelected.toISOString().split('T')[0] : null;
-    
-        // Ensure the keys match the backend table columns
-        const employeeData = {
-            first_name: firstName,
-            last_name: lastName,
-            em_email: email,
-            em_password: password,
-            em_address: address,
-            em_status: status,  //  This should match backend's `em_status`
-            em_gender: gender,
-            em_phone: number,
-            em_birthday: formattedDate,
-            em_salary: salary
-        };
-    
-        console.log("Sending Data:", employeeData); //  Debugging Request Data
-    
-        axios.post('http://localhost:3000/employee/add-employee', employeeData)
-            .then(res => {
-                console.log(" Success:", res.data);
-                navigate('/employee');
-            })
-            .catch(err => console.error(" Error:", err));
-    }
-        
-    
+    const handleFieldChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+
+    const handleSave = async () => {
+        setSaving(true);
+        setError(null);
+        try {
+            await axios.post('http://localhost:3000/employee/add-employee', formData);
+            navigate('/employee');
+        } catch (err) {
+            setError('Failed to add employee.');
+        } finally {
+            setSaving(false);
+        }
+    };
 
     return (
-        <div className='add-container'>
-            <div className='add-container2'>
-                <div className='leftNav'>
-                    <Link to="/employee" className='leftNavBtn'>Home</Link>
-                    <Link className='leftNavBtn'>CV screening</Link>
-                    <Link className='leftNavBtn'>Job posting</Link>
-                    <Link className='leftNavBtn'>Logout</Link> 
-                    
+        <>
+            <Topbar />
+            <div className="show-wrapper">
+                <h2 style={{ textAlign: 'center', fontWeight: 700, marginBottom: 32, color: '#3a9bed', letterSpacing: 1 }}>Add Employee</h2>
+                <div className="show-card-row">
+                    <EmployeeCardEditable
+                        label="First Name"
+                        value={formData.first_name}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("first_name", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Last Name"
+                        value={formData.last_name}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("last_name", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Gender"
+                        value={formData.em_gender}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_gender", val)}
+                        fieldType="gender"
+                    />
+                    <EmployeeCardEditable
+                        label="Status"
+                        value={formData.em_status}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_status", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Email"
+                        value={formData.em_email}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_email", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Address"
+                        value={formData.em_address}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_address", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Phone Number"
+                        value={formData.em_phone}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_phone", val)}
+                    />
+                    <EmployeeCardEditable
+                        label="Date of Birth"
+                        value={formData.em_birthday}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_birthday", val)}
+                        fieldType="date"
+                    />
+                    <EmployeeCardEditable
+                        label="Salary"
+                        value={formData.em_salary}
+                        isEditable={true}
+                        onChange={(val) => handleFieldChange("em_salary", val)}
+                    />
+                </div>
+                <div style={{ textAlign: 'center', marginTop: 24 }}>
+                    <button className="save-all-button" onClick={handleSave} disabled={saving}>
+                        {saving ? 'Saving...' : 'Save Employee'}
+                    </button>
+                    {error && <div style={{ color: 'red', marginTop: 12 }}>{error}</div>}
                 </div>
             </div>
-            <div className='add-container3'>
-                <div className='add-form'>
-                    <h3>Add Employee</h3>
-                    <div className='box'>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                <label htmlFor="Fname" className="form-label text-white">First Name</label>
-                                <input type="text" className="form-control" id="Fname" onChange={e => setFirstName(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="Lname" className="form-label text-white">Last Name</label>
-                                <input type="text" className="form-control" id="Lname" onChange={e => setLastName(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="E-mail" className="form-label text-white">E-mail</label>
-                                <input type="email" className="form-control" id="E-mail" onChange={e => setEmail(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="Password" className="form-label text-white">Password</label>
-                                <input type="password" className="form-control" id="Password" onChange={e => setPassword(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="Address" className="form-label text-white">Address</label>
-                                <input type="text" className="form-control" id="Address" onChange={e => setAddress(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="status" className="form-label text-white">Status</label>
-                                <select className="form-select" id="status" value={status} onChange={e => setStatus(e.target.value)}>
-                                    <option value="ACTIVE">Active</option>
-                                    <option value="INACTIVE">Inactive</option>
-                                    <option value="RESIGNED">Resigned</option>
-                                    <option value="RETIRED">Retired</option>
-                                </select>
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="gender" className="form-label text-white">Gender</label>
-                                <select className="form-select" id="gender" value={gender} onChange={e => setGender(e.target.value)}>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="phone" className="form-label text-white">Phone Number</label>
-                                <input type="tel" className="form-control" id="phone" pattern='[0-9]{11}' onChange={e => setNumber(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="department" className="form-label text-white">Department</label>
-                                <select className="form-select" id="department" value={department} onChange={e => setDepartment(e.target.value)}>
-                                    <option value="IT">IT</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Management">Management</option>
-                                </select>
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="designation" className="form-label text-white">Designation</label>
-                                <select className="form-select" id="designation" value={designation} onChange={e => setDesignation(e.target.value)}>
-                                    {department === 'IT' && (
-                                        <>
-                                            <option value="Sr. Mobile Dev">Sr. Mobile Dev</option>
-                                            <option value="Jr. Mobile Dev">Jr. Mobile Dev</option>
-                                            <option value="Sr. Web Dev">Sr. Web Dev</option>
-                                            <option value="Jr. Web Dev">Jr. Web Dev</option>
-                                        </>
-                                    )}
-                                    {department === 'Sales' && (
-                                        <>
-                                            <option value="Sales Supervisor">Sales Supervisor</option>
-                                            <option value="Sales Associate">Sales Associate</option>
-                                            <option value="Sales Engineer">Sales Engineer</option>
-                                            <option value="Account Manager">Account Manager</option>
-                                        </>
-                                    )}
-                                    {department === 'Management' && (
-                                        <>
-                                            <option value="Office Manager">Office Manager</option>
-                                            <option value="Department Manager">Department Manager</option>
-                                            <option value="Assistant Manager">Assistant Manager</option>
-                                            <option value="Social Media Manager">Social Media Manager</option>
-                                            <option value="Trainee Manager">Trainee Manager</option>
-                                        </>
-                                    )}
-                                    {department === 'Marketing' && (
-                                        <>
-                                            <option value="Chief Marketing Officer">Chief Marketing Officer</option>
-                                            <option value="Marketing Specialist">Marketing Specialist</option>
-                                            <option value="Copywriter/Content Creator">Copywriter/Content Creator</option>
-                                            <option value="SEO Specialist">SEO Specialist</option>
-                                        </>
-                                    )}
-                                </select>
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="salary" className="form-label text-white">Salary</label>
-                                <input type="text" className="form-control" id="salary" onChange={e => setSalary(e.target.value)} />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="birth" className="form-label text-white">Date of Birth</label>
-                                <Datepicker
-                                    className="form-control"
-                                    id="birth"
-                                    selected={dateSelected}
-                                    onChange={date => setDateSelected(date)}
-                                    dateFormat="yyyy-MM-dd"
-                                    showYearDropdown
-                                />
-                            </div>
-
-                            <button type="submit" className="btn btn-primary" disabled={!firstName || !lastName || !email || !salary}>
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </>
     );
 }
