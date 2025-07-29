@@ -366,7 +366,7 @@ app.post('/employee/add-employee', (req, res) => {
                     if (userErr) {
                         console.error("User Insert Error:", userErr);
                     } else {
-                        console.log("✅ User added to users table");
+                        console.log(" User added to users table");
                     }
                 });
             } catch (hashErr) {
@@ -374,7 +374,7 @@ app.post('/employee/add-employee', (req, res) => {
             }
         })();
         //////////////////
-        res.status(201).json({ message: "✅ Employee added successfully!", data });
+        res.status(201).json({ message: " Employee added successfully!", data });
 
     
     });
