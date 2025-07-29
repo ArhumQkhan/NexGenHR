@@ -10,21 +10,21 @@ function Cards() {
       src: "autoR.jpeg",
       text: "AI-driven job posting & candidate screening.",
       label: "Automated Recruitment System",
-      path: "/services",
+      path: "/job-Posting",
     },
     {
       id: 2,
       src: "SHRM.jpeg",
       text: "Automate employee records, leave management, and performance tracking using AI-powered analytics.",
       label: "Smart HR Management",
-      path: "/services",
+      
     },
     {
       id: 3,
       src: "/payFia.png",
       text: "Handle salary calculations, tax deductions, and payslip generation seamlessly. Integrated with accounting tools.",
       label: "Payroll & Finance Automation",
-      path: "/services",
+      
     },
   ];
 
