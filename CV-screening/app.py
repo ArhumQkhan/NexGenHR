@@ -57,7 +57,7 @@ Based on semantic and skill relevance, give ONLY the overall match percentage be
     return percent
 
 # Streamlit UI
-st.title("ATS CV Screening App (Gemini-powered)")
+st.title("NexGen Resume Screening")
 
 jd = st.text_area("Paste the Job Description here:")
 
